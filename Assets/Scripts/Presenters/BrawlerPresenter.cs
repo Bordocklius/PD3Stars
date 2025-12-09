@@ -1,6 +1,7 @@
 using PD3Stars.Models;
 using PD3Stars.Strategies.Movement;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -9,18 +10,23 @@ namespace PD3Stars.Presenters
 {
     public abstract class BrawlerPresenter<TBrawler> : PresenterBaseClass<TBrawler> where TBrawler : Brawler
     {
+        [Header("Movement")]
         [SerializeField]
         private float _movementSpeed;
         [SerializeField]
         private Transform _transform;
         [SerializeField]
-        private Camera _camera;
-        [SerializeField]
         private float _rotationSpeed;
+        [SerializeField]
+        private InputSystem_Actions _inputActions;
+
+        private Vector2 _movementInput;
+
+        [SerializeField]
+        private Camera _camera;
         [SerializeField]
         private LayerMask _groundMask;
 
-        private Vector2 _movementInput;
 
         [SerializeField]
         private Image HealthBar;
@@ -51,6 +57,11 @@ namespace PD3Stars.Presenters
         //}
 
         public void AddHBPresenter() => _HBPresenter = new HealthBarPresenter(Model, HealthBar);
+
+        public void OnEnable()
+        {
+
+        }
 
         protected override void Update()
         {

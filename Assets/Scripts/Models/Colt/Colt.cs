@@ -9,7 +9,7 @@ namespace PD3Stars.Models.ColtModels
         public event EventHandler<ColtFiredEventArgs> ColtFired;
 
         public int MagSize { get; set; } = 8;
-        public float FireDelay { get; private set; } = 0.3f;
+        public float FireDelay { get; private set; } = 0.1f;
         private float _fireTimer;
 
         public Colt(): base()
