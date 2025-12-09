@@ -60,7 +60,13 @@ namespace PD3Stars.Presenters
 
         public void OnEnable()
         {
+            if(_inputActions != null)
+            {
+                _inputActions.PlayerInput.Move.Enable();
+            }
+                _inputActions.PlayerInput.Enable();
 
+            InputAction test = _inputActions.PlayerInput.Move;
         }
 
         protected override void Update()
