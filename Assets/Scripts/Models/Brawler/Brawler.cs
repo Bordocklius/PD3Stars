@@ -1,0 +1,83 @@
+using PD3Stars.Presenters;
+using System;
+using UnityEngine;
+
+namespace PD3Stars.Models
+{
+    public abstract partial class Brawler : UnityModelBaseClass, IHealthBar
+    {
+        public event EventHandler HealthChanged;
+        public event EventHandler<BrawlerHealthEventArgs> HealthChangedValues;
+
+        public const float MAXHEALTH = 1000;
+        private float _health;
+        public float Health
+        {
+            get { return _health; }
+            set
+            {
+                if (value > MAXHEALTH)
+                {
+                    value = MAXHEALTH;
+                }
+
+                float oldHealth = _health;
+                _health = value;
+
+                OnPropertyChanged();
+                // Invoke Healthchanged event for listeners
+                OnBrawlerHealthChanged();
+            }
+        }
+
+        public float HealthProgress { get => Health / MAXHEALTH; }
+
+        protected BrawlerHPFSM HPFSM;
+        protected BrawlerPAFSM PAFSM;
+
+        public Vector3 AttackTarget;
+
+        public Brawler()
+        {
+            Health = 1;
+        }
+
+        public override void FixedUpdate(float fixedDeltaTime)
+        {
+            HPFSM.FixedUpdate(fixedDeltaTime);
+            PAFSM.FixedUpdate(fixedDeltaTime);
+        }
+
+        public abstract void PARequested();
+
+        protected abstract void PAExecuted();
+
+        public void SetAttackTarget(Vector3 target)
+        {
+            AttackTarget = target;
+        }
+
+        public void RegenerateHealth(float fixedDeltaTime)
+        {
+            // Regenerate 13% of maxhealth/sec
+            Health += fixedDeltaTime * 0.13f * MAXHEALTH;
+        }
+
+        protected virtual void OnBrawlerHealthChanged()
+        {
+            HealthChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public class BrawlerHealthEventArgs : EventArgs
+    {
+        public float OldHealth { get; set; }
+        public float NewHealth { get; set; }
+
+        public BrawlerHealthEventArgs(float oldHealth, float newHealth)
+        {
+            OldHealth = oldHealth;
+            NewHealth = newHealth;
+        }
+    }
+}

@@ -1,0 +1,17 @@
+﻿using PD3Stars.Models;
+using PD3Stars.Presenters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PD3Stars.Strategies
+{
+    public interface IBrawlerStrategy
+    {
+        public Brawler Context { get; }
+        public BrawlerPresenter<Brawler> ContextPresenter { get; }
+        public void FixedUpdate(float fixedDeltaTime);
+    }
+}
