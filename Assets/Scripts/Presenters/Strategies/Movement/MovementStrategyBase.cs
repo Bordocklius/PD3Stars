@@ -24,6 +24,19 @@ namespace PD3Stars.Strategies.Movement
 			}
 		}
 
+
+		private Vector3 _rotationDirection;
+		public Vector3 RotationDirection
+		{
+			get { return _rotationDirection; }
+			set
+			{
+				if (_rotationDirection == value)
+					return;
+				_rotationDirection = value;
+			}
+		}
+
 		public MovementStrategyBase(Brawler context, BrawlerPresenter contextPresenter): 
 			base(context, contextPresenter)
 		{ }

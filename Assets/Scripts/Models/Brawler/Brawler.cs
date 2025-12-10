@@ -36,6 +36,8 @@ namespace PD3Stars.Models
 
         public Vector3 AttackTarget;
 
+        public virtual string PrefabName => "Brawler";
+
         public Brawler()
         {
             Health = 1;

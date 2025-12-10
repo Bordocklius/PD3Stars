@@ -102,7 +102,7 @@ namespace PD3Animations
             FSM.CurrentState.StartAnimation();
             while(FSM.CurrentState is not AnimationEndedState)
             {
-                FSM.FixedUpdate(DeltaTime.Invoke());
+                FSM.FixedUpdate(DeltaTime());
                 yield return null;
             }
         }

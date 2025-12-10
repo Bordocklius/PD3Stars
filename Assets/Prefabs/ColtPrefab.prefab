@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 6907525338339391422}
   - component: {fileID: 5346826130485305286}
   m_Layer: 0
-  m_Name: Colt
+  m_Name: ColtPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,10 +440,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementSpeed: 5
-  _transform: {fileID: 6606970783869764773}
-  _rotationSpeed: 5
-  _camera: {fileID: 0}
-  _groundMask:
+  <Transform>k__BackingField: {fileID: 6606970783869764773}
+  <RotationSpeed>k__BackingField: 5
+  <Camera>k__BackingField: {fileID: 0}
+  <GroundMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
   HealthBar: {fileID: 8890755170702473890}

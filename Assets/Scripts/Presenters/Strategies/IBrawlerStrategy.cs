@@ -12,6 +12,7 @@ namespace PD3Stars.Strategies
     {
         public Brawler Context { get; }
         public BrawlerPresenter ContextPresenter { get; }
+        public void Update(float deltaTime);
         public void FixedUpdate(float fixedDeltaTime);
     }
 }

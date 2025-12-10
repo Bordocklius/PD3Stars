@@ -3,6 +3,7 @@ using PD3Stars.Strategies.Movement;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -13,10 +14,10 @@ namespace PD3Stars.Presenters
         [Header("Movement")]
         [SerializeField]
         private float _movementSpeed;
-        [SerializeField]
-        private Transform _transform;
-        [SerializeField]
-        private float _rotationSpeed;
+        [field: SerializeField]
+        public Transform Transform { get; private set; }
+        [field: SerializeField]
+        public float RotationSpeed { get; private set; }
 
         [SerializeField]
         private InputSystem_Actions _inputActions;
@@ -26,10 +27,10 @@ namespace PD3Stars.Presenters
 
         private Vector2 _movementInput;
 
-        [SerializeField]
-        private Camera _camera;
-        [SerializeField]
-        private LayerMask _groundMask;
+        [field: SerializeField]
+        public Camera Camera { get; set; }
+        [field: SerializeField]
+        public LayerMask GroundMask { get; private set; }
 
 
         [SerializeField]
@@ -62,6 +63,14 @@ namespace PD3Stars.Presenters
 
         public void AddHBPresenter() => _HBPresenter = new HealthBarPresenter(Model, HealthBar);
 
+        public void Awake()
+        {
+            if (Transform == null)
+                Transform = this.transform;
+            if (Camera == null)
+                Camera = Camera.main;
+        }
+
         public void OnEnable()
         {
             _inputActions = new InputSystem_Actions();
@@ -70,32 +79,31 @@ namespace PD3Stars.Presenters
                 Debug.Log("InputActions reference not set");
                 return;
             }
-
-            _paAction = _inputActions.PlayerInput.PrimaryAttack;
-
-            _paAction.Enable();
-            _paAction.performed += PA_Performed;
         }
 
         public void OnDisable()
         {
-            _paAction.Disable();
-            _paAction.performed -= PA_Performed;
+
         }
 
         protected override void Update()
         {
             base.Update();
-            HandleMovement();
-            HandleRotation();
+            if(MovementStrategy != null)
+            {
+                MovementStrategy.Update(Time.deltaTime);            
+                HandleMovement();            
+                HandleRotation();
+            }
+            
         }
 
         private void HandleMovement()
         {
             if(MovementStrategy.MoveDirection != Vector2.zero)
             {
-                Vector3 movement = new Vector3(_movementInput.x, 0, _movementInput.y) * _movementSpeed * Time.deltaTime;
-                _transform.position += movement;
+                Vector3 movement = new Vector3(MovementStrategy.MoveDirection.x, 0, MovementStrategy.MoveDirection.y) * _movementSpeed * Time.deltaTime;
+                Transform.position += movement;
             }
             //if (_movementInput != null)
             //{
@@ -106,18 +114,25 @@ namespace PD3Stars.Presenters
 
         private void HandleRotation()
         {
-            // Look towards ground based on where mouse is positioned
-            Vector3 targetPoint = GetMousePosition();
-
-            // Direction from character to mouse hit point
-            Vector3 direction = targetPoint - _transform.position;
-            direction.y = 0f; // Prevent tilting up/down
-
-            if (direction.sqrMagnitude > 0.001f)
+            if(MovementStrategy.RotationDirection != Vector3.zero)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                _transform.rotation = Quaternion.Slerp(_transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
+                Quaternion targetRotation = Quaternion.LookRotation(MovementStrategy.RotationDirection, Vector3.up);
+                //Transform.rotation = Quaternion.RotateTowards(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
+                Transform.rotation = Quaternion.Slerp(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
             }
+
+            //// Look towards ground based on where mouse is positioned
+            //Vector3 targetPoint = GetMousePosition();
+
+            //// Direction from character to mouse hit point
+            //Vector3 direction = targetPoint - Transform.position;
+            //direction.y = 0f; // Prevent tilting up/down
+
+            //if (direction.sqrMagnitude > 0.001f)
+            //{
+            //    Quaternion targetRotation = Quaternion.LookRotation(direction);
+            //    Transform.rotation = Quaternion.Slerp(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
+            //}
         }
 
         protected virtual void PA_Performed(InputAction.CallbackContext ctx)
@@ -139,21 +154,16 @@ namespace PD3Stars.Presenters
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 targetPoint = new Vector3();
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _groundMask))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, GroundMask))
             {
                 targetPoint = hitInfo.point;
             }
             return targetPoint;
         }
 
-        public void AddPlayerInput(PlayerInput playerInput)
-        {
-            _playerInput = playerInput;
-        }
-
         private void ShowHealth()
         {
-            Debug.Log($"BrawlerHealth: {Model.Health}");
+            //Debug.Log($"BrawlerHealth: {Model.Health}");
         }
     }
 }

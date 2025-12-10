@@ -49,6 +49,8 @@ namespace PD3Stars.Strategies
 
 		protected virtual void Context_OnPropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
+		public virtual void Update(float deltaTime) { }
+
 		public virtual void FixedUpdate(float fixedDeltaTime) { }
     }
 }

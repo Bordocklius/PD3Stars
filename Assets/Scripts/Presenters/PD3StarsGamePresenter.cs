@@ -3,7 +3,9 @@ using PD3Stars.Models.ColtModels;
 using PD3Stars.Models.ElPrimoModels;
 using PD3Stars.Singleton;
 using PD3Stars.Strategies.Movement;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -18,6 +20,10 @@ namespace PD3Stars.Presenters
         public InputSystem_Actions inputActions;
         public UIDocument HUD;
         public HUDPresenter HUDPresenter;
+
+        [SerializeField]
+        private List<GameObject> _prefabByName = new List<GameObject>();
+        private List<GameObject> _brawlerObjects = new List<GameObject>();
 
         private void Awake()
         {
@@ -41,18 +47,28 @@ namespace PD3Stars.Presenters
 
         private void Model_BrawlerSpawned(object sender, BrawlerSpawnedEventArgs e)
         {
-            if(e.Brawler is Colt colt)
+            GameObject prefab = _prefabByName.Where(x => x.name == e.Brawler.PrefabName).FirstOrDefault();
+            if(prefab == null)
             {
-                GameObject coltObj = Instantiate(ColtPresenterPrefab, transform);
-                _coltPresenter = coltObj.GetComponent<ColtPresenter>();
-                _coltPresenter.Model = colt;
-                _coltPresenter.transform.position = new Vector3(0, 0, 0);
-                _coltPresenter.transform.rotation = Quaternion.identity;
-                _coltPresenter.gameObject.SetActive(true);
-                IMovementStrategy movementStrategy = new UserMovementStrategy(_coltPresenter.Model, _coltPresenter);
-                //_coltPresenter.AddPlayerInput(PlayerInput);
-                _coltPresenter.AddHBPresenter();
+                Debug.LogError($"No prefab found by name of {e.Brawler.PrefabName}");
+                return;
             }
+
+            GameObject brawlerObj = Instantiate(prefab, transform);
+            InitializePresenter(e.Brawler, brawlerObj);
+
+            //if(e.Brawler is Colt colt)
+            //{
+            //    GameObject coltObj = Instantiate(ColtPresenterPrefab, transform);
+            //    _coltPresenter = coltObj.GetComponent<ColtPresenter>();
+            //    _coltPresenter.Model = colt;
+            //    _coltPresenter.transform.position = new Vector3(0, 0, 0);
+            //    _coltPresenter.transform.rotation = Quaternion.identity;
+            //    _coltPresenter.gameObject.SetActive(true);
+            //    IMovementStrategy movementStrategy = new UserMovementStrategy(_coltPresenter.Model, _coltPresenter);
+            //    //_coltPresenter.AddPlayerInput(PlayerInput);
+            //    _coltPresenter.AddHBPresenter();
+            //}
             //if(e.Brawler is ElPrimo elPrimo)
             //{
             //    GameObject coltObj = Instantiate(ColtPresenterPrefab, transform);
@@ -64,6 +80,30 @@ namespace PD3Stars.Presenters
             //    _coltPresenter.AddPlayerInput(PlayerInput);
             //    _coltPresenter.AddHBPresenter();
             //}
+        }
+
+        private void InitializePresenter(Brawler brawler, GameObject gameobj)
+        {
+            _brawlerObjects.Add(gameobj);
+            BrawlerPresenter brawlerPresenter = gameobj.GetComponent<BrawlerPresenter>();
+            brawlerPresenter.Model = brawler;
+            brawlerPresenter.transform.position = Vector3.zero;
+            brawlerPresenter.transform.rotation = Quaternion.identity;
+            brawlerPresenter.AddHBPresenter();
+
+            if(_brawlerObjects.Count == 1)
+            {
+                Camera.main.GetComponent<CameraFollowScript>().SetTarget(brawlerPresenter.transform);
+                brawlerPresenter.Camera = Camera.main;
+                IMovementStrategy movementStrategy = new UserMovementStrategy(brawler, brawlerPresenter);
+                (movementStrategy as UserMovementStrategy).SetInputActions(new InputSystem_Actions());
+                brawlerPresenter.MovementStrategy = movementStrategy;
+            }
+            else
+            {
+                IMovementStrategy movementStrategy = new RotateMovementStrategy(brawler, brawlerPresenter);
+                brawlerPresenter.MovementStrategy = movementStrategy;
+            }
         }
     }
 }

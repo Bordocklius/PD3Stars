@@ -23,13 +23,13 @@ namespace PD3Stars.Presenters
         protected override void ModelSetInitialisation(Brawler previousModel)
         {
             base.ModelSetInitialisation(previousModel);
-            Colt coltModel = previousModel as Colt;
-            if (previousModel != null)
+            Colt previousColtModel = previousModel as Colt;
+            if (previousColtModel != null)
             {
-                coltModel.ColtFired -= Model_OnColtFired;
+                previousColtModel.ColtFired -= Model_OnColtFired;
             }
-            coltModel.ColtFired += Model_OnColtFired;
-            coltModel.MagSize = _magSize;
+            (Model as Colt).ColtFired += Model_OnColtFired;
+            (Model as Colt).MagSize = _magSize;
         }
 
         protected override void OnPrimaryAttack(InputValue inputValue)

@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-using PD3Stars.Models;
 
 namespace PD3Stars.Models.ColtModels
 {
@@ -11,6 +9,8 @@ namespace PD3Stars.Models.ColtModels
         public int MagSize { get; set; } = 8;
         public float FireDelay { get; private set; } = 0.1f;
         private float _fireTimer;
+
+        public override string PrefabName => "ColtPrefab";
 
         public Colt(): base()
         {
