@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace PD3Stars.Presenters
 {
-    public abstract class BrawlerPresenter<TBrawler> : PresenterBaseClass<TBrawler> where TBrawler : Brawler
+    public abstract class BrawlerPresenter : PresenterBaseClass<Brawler>
     {
         [Header("Movement")]
         [SerializeField]
@@ -17,8 +17,12 @@ namespace PD3Stars.Presenters
         private Transform _transform;
         [SerializeField]
         private float _rotationSpeed;
+
         [SerializeField]
         private InputSystem_Actions _inputActions;
+        private PlayerInput _playerInput;
+        private InputAction _moveAction;
+        private InputAction _paAction;
 
         private Vector2 _movementInput;
 
@@ -60,13 +64,23 @@ namespace PD3Stars.Presenters
 
         public void OnEnable()
         {
-            if(_inputActions != null)
+            _inputActions = new InputSystem_Actions();
+            if (_inputActions == null)
             {
-                _inputActions.PlayerInput.Move.Enable();
+                Debug.Log("InputActions reference not set");
+                return;
             }
-                _inputActions.PlayerInput.Enable();
 
-            InputAction test = _inputActions.PlayerInput.Move;
+            _paAction = _inputActions.PlayerInput.PrimaryAttack;
+
+            _paAction.Enable();
+            _paAction.performed += PA_Performed;
+        }
+
+        public void OnDisable()
+        {
+            _paAction.Disable();
+            _paAction.performed -= PA_Performed;
         }
 
         protected override void Update()
@@ -76,18 +90,18 @@ namespace PD3Stars.Presenters
             HandleRotation();
         }
 
-        private void OnMove(InputValue inputValue)
-        {
-            _movementInput = inputValue.Get<Vector2>();
-        }
-
         private void HandleMovement()
         {
-            if (_movementInput != null)
+            if(MovementStrategy.MoveDirection != Vector2.zero)
             {
                 Vector3 movement = new Vector3(_movementInput.x, 0, _movementInput.y) * _movementSpeed * Time.deltaTime;
                 _transform.position += movement;
             }
+            //if (_movementInput != null)
+            //{
+            //    Vector3 movement = new Vector3(_movementInput.x, 0, _movementInput.y) * _movementSpeed * Time.deltaTime;
+            //    _transform.position += movement;
+            //}
         }
 
         private void HandleRotation()
@@ -106,6 +120,15 @@ namespace PD3Stars.Presenters
             }
         }
 
+        protected virtual void PA_Performed(InputAction.CallbackContext ctx)
+        {
+            if (ctx.performed)
+            {
+                Model?.SetAttackTarget(GetMousePosition());
+                Model?.PARequested();
+            }
+        }
+
         protected virtual void OnPrimaryAttack(InputValue inputValue)
         {
             Model?.SetAttackTarget(GetMousePosition());
@@ -121,6 +144,11 @@ namespace PD3Stars.Presenters
                 targetPoint = hitInfo.point;
             }
             return targetPoint;
+        }
+
+        public void AddPlayerInput(PlayerInput playerInput)
+        {
+            _playerInput = playerInput;
         }
 
         private void ShowHealth()

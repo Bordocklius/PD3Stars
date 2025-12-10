@@ -2,6 +2,7 @@
 using PD3Stars.Models.ColtModels;
 using PD3Stars.Models.ElPrimoModels;
 using PD3Stars.Singleton;
+using PD3Stars.Strategies.Movement;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,6 +15,7 @@ namespace PD3Stars.Presenters
         public GameObject ColtPresenterPrefab;
         private ColtPresenter _coltPresenter;
         public PlayerInput PlayerInput;
+        public InputSystem_Actions inputActions;
         public UIDocument HUD;
         public HUDPresenter HUDPresenter;
 
@@ -47,7 +49,8 @@ namespace PD3Stars.Presenters
                 _coltPresenter.transform.position = new Vector3(0, 0, 0);
                 _coltPresenter.transform.rotation = Quaternion.identity;
                 _coltPresenter.gameObject.SetActive(true);
-                _coltPresenter.AddPlayerInput(PlayerInput);
+                IMovementStrategy movementStrategy = new UserMovementStrategy(_coltPresenter.Model, _coltPresenter);
+                //_coltPresenter.AddPlayerInput(PlayerInput);
                 _coltPresenter.AddHBPresenter();
             }
             //if(e.Brawler is ElPrimo elPrimo)

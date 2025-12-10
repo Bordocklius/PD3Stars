@@ -404,13 +404,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5838767491287739395}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -441,8 +441,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 5
   _transform: {fileID: 6606970783869764773}
-  _camera: {fileID: 0}
   _rotationSpeed: 5
+  _camera: {fileID: 0}
   _groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -450,7 +450,6 @@ MonoBehaviour:
   _coltBulletPrefab: {fileID: 6676062174105204688, guid: a4f7d13117056f7458d01fea53115c65, type: 3}
   _magSize: 8
   _barrelPoint: {fileID: 3873039892871025892}
-  _playerInput: {fileID: 0}
 --- !u!1 &6822442907441811856
 GameObject:
   m_ObjectHideFlags: 0

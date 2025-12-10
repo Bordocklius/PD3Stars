@@ -24,7 +24,7 @@ namespace PD3Stars.Strategies.Movement
 			}
 		}
 
-		public MovementStrategyBase(Brawler context, BrawlerPresenter<Brawler> contextPresenter): 
+		public MovementStrategyBase(Brawler context, BrawlerPresenter contextPresenter): 
 			base(context, contextPresenter)
 		{ }
     }

@@ -1,10 +1,11 @@
+using PD3Stars.Models;
 using PD3Stars.Models.ColtModels;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace PD3Stars.Presenters
 {
-    public class ColtPresenter : BrawlerPresenter<Colt>
+    public class ColtPresenter : BrawlerPresenter
     {
         [SerializeField]
         private GameObject _coltBulletPrefab;
@@ -12,8 +13,6 @@ namespace PD3Stars.Presenters
         private int _magSize;
         [SerializeField]
         private Transform _barrelPoint;
-        [SerializeField]
-        private PlayerInput _playerInput;
 
         protected void Awake()
         {
@@ -21,15 +20,16 @@ namespace PD3Stars.Presenters
             //Model.MagSize = _magSize;
         }
 
-        protected override void ModelSetInitialisation(Colt previousModel)
+        protected override void ModelSetInitialisation(Brawler previousModel)
         {
             base.ModelSetInitialisation(previousModel);
+            Colt coltModel = previousModel as Colt;
             if (previousModel != null)
             {
-                previousModel.ColtFired -= Model_OnColtFired;
+                coltModel.ColtFired -= Model_OnColtFired;
             }
-            Model.ColtFired += Model_OnColtFired;
-            Model.MagSize = _magSize;
+            coltModel.ColtFired += Model_OnColtFired;
+            coltModel.MagSize = _magSize;
         }
 
         protected override void OnPrimaryAttack(InputValue inputValue)
@@ -47,9 +47,5 @@ namespace PD3Stars.Presenters
             bullet.GetComponent<ColtBulletPresenter>().Model = e.ColtBullet;
         }
 
-        public void AddPlayerInput(PlayerInput playerInput)
-        {
-            _playerInput = playerInput;
-        }
     }
 }

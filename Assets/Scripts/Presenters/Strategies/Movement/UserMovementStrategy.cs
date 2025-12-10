@@ -12,13 +12,37 @@ namespace PD3Stars.Strategies.Movement
 {
     public class UserMovementStrategy: MovementStrategyBase
     {
-        public UserMovementStrategy(Brawler context, BrawlerPresenter<Brawler> contextPresenter):
+        private InputSystem_Actions _inputActions;
+        private InputAction _moveAction;
+        public UserMovementStrategy(Brawler context, BrawlerPresenter contextPresenter):
             base(context, contextPresenter)
         { }
 
-        private void OnMove(InputValue value)
+        public void SetInputActions(InputSystem_Actions inputActions)
         {
-            MoveDirection = value.Get<Vector2>();
+            DisableActions();
+            _inputActions = inputActions;
+            EnableActions();
+        }
+
+        private void EnableActions()
+        {
+            _moveAction.Enable();
+            _moveAction.performed += Move_Performed;
+            _moveAction.canceled += ctx => MoveDirection = Vector2.zero;
+        }
+
+        private void DisableActions()
+        {
+            _moveAction.Disable();
+            _moveAction.performed -= Move_Performed;
+            _moveAction.canceled -= ctx => MoveDirection = Vector2.zero;
+        }
+
+        private void Move_Performed(InputAction.CallbackContext ctx)
+        {
+            if (ctx.performed)
+                MoveDirection = ctx.ReadValue<Vector2>();
         }
     }
 }

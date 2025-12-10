@@ -29,8 +29,8 @@ namespace PD3Stars.Strategies
 		}
 
 
-		private BrawlerPresenter<Brawler> _contextPresenter;
-		public virtual BrawlerPresenter<Brawler> ContextPresenter
+		private BrawlerPresenter _contextPresenter;
+		public virtual BrawlerPresenter ContextPresenter
 		{
 			get { return _contextPresenter; }
 			set
@@ -41,7 +41,7 @@ namespace PD3Stars.Strategies
 			}
 		}
 
-		public BrawlerStrategyBaseClass(Brawler context, BrawlerPresenter<Brawler> contextPresenter)
+		public BrawlerStrategyBaseClass(Brawler context, BrawlerPresenter contextPresenter)
 		{
 			Context = context;
 			ContextPresenter = contextPresenter;
