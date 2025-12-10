@@ -11,7 +11,7 @@ namespace PD3Stars.Strategies.Movement
 {
     public class RotateMovementStrategy : MovementStrategyBase
     {
-        public RotateMovementStrategy(Brawler context, BrawlerPresenter<Brawler> contextPresenter):
+        public RotateMovementStrategy(Brawler context, BrawlerPresenter contextPresenter):
             base(context, contextPresenter)
         {
         }
