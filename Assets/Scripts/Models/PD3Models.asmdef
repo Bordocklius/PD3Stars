@@ -1,0 +1,17 @@
+{
+    "name": "PD3Models",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d62dc5e9ac7fc624b835c3bb701f20aa",
+        "GUID:7138d63b7e732b34abae4727b8f62d78"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

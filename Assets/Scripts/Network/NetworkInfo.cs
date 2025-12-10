@@ -1,13 +1,8 @@
 ﻿using PD3Stars.Models;
 using PD3Stars.Models.ColtModels;
 using PD3Stars.Models.ElPrimoModels;
-using PD3Stars.Singleton;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using PD3Stars.Singleton;
 
 namespace PD3Stars.Network
 {

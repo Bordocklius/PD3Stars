@@ -1,0 +1,20 @@
+{
+    "name": "PD3Presenters",
+    "rootNamespace": "",
+    "references": [
+        "GUID:34b74089273cf334685e9f485422e846",
+        "GUID:d62dc5e9ac7fc624b835c3bb701f20aa",
+        "GUID:7138d63b7e732b34abae4727b8f62d78",
+        "GUID:e53c01c34cc3b1a4385cc0c6c3603e48",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

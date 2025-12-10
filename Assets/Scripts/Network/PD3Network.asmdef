@@ -1,0 +1,17 @@
+{
+    "name": "PD3Network",
+    "rootNamespace": "",
+    "references": [
+        "GUID:34b74089273cf334685e9f485422e846",
+        "GUID:7138d63b7e732b34abae4727b8f62d78"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
