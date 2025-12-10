@@ -1,0 +1,16 @@
+{
+    "name": "PD3Animations",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d62dc5e9ac7fc624b835c3bb701f20aa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
