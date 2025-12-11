@@ -8,9 +8,12 @@ namespace PD3Stars.Models.ElPrimoModels
 {
     public partial class ElPrimo: Brawler
     {
+        public override string PrefabName => "ElPrimoPrefab";
+
         public ElPrimo(): base()
         {
             HPFSM = new ElPrimoHPFSM(this);
+            PAFSM = new ElPrimoPAFSM(this);
         }
 
         public override void FixedUpdate(float fixedDeltaTime)

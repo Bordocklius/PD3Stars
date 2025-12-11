@@ -14,18 +14,12 @@ namespace PD3Stars.Presenters
         [SerializeField]
         private Transform _barrelPoint;
 
-        protected void Awake()
-        {
-            //Model = new Colt();
-            //Model.MagSize = _magSize;
-        }
-
         protected override void ModelSetInitialisation(Brawler previousModel)
         {
             base.ModelSetInitialisation(previousModel);
-            Colt previousColtModel = previousModel as Colt;
-            if (previousColtModel != null)
+            if (previousModel != null)
             {
+                Colt previousColtModel = previousModel as Colt;
                 previousColtModel.ColtFired -= Model_OnColtFired;
             }
             (Model as Colt).ColtFired += Model_OnColtFired;

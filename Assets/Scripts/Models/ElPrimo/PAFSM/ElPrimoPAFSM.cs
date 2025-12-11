@@ -14,7 +14,7 @@ namespace PD3Stars.Models.ElPrimoModels
         {
             public new ElPrimo Context { get; set; }
 
-            public ElPrimoPAFSM(Colt context) : base(context)
+            public ElPrimoPAFSM(ElPrimo context) : base(context)
             {
                 BrawlerPAExecutingState = new ElPrimoPAExecutingState(this);
             }

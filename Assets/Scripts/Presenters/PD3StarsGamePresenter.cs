@@ -31,6 +31,7 @@ namespace PD3Stars.Presenters
             inputActions = new InputSystem_Actions();
             Model = Singleton<PD3StarsGame>.Instance;
             Model.AddColt();
+            //Model.AddElPrimo();
         }
 
         protected override void ModelSetInitialisation(PD3StarsGame previousModel)

@@ -1,24 +1,31 @@
-﻿using PD3Stars.Models.ElPrimoModels;
+﻿using PD3Stars.Models;
+using PD3Stars.Models.ColtModels;
+using PD3Stars.Models.ElPrimoModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace PD3Stars.Presenters
 {
-    public class ElPrimoPresenter: PresenterBaseClass<ElPrimo>
-    {
+    public class ElPrimoPresenter: BrawlerPresenter
+    {      
 
-        protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override void ModelSetInitialisation(Brawler previousModel)
         {
-            
+            base.ModelSetInitialisation(previousModel);
+            if(previousModel != null )
+            {
+                ElPrimo previousElPrimo = previousModel as ElPrimo;
+            }
         }
 
-        protected override void ModelSetInitialisation(ElPrimo previousModel)
+        public override void OnPrimaryAttack(Vector3 attackDirection)
         {
-            
+            Debug.Log("ElPrimo bonk");
         }
     }
 }

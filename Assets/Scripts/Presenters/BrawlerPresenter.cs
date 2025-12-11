@@ -77,21 +77,6 @@ namespace PD3Stars.Presenters
                 Camera = Camera.main;
         }
 
-        public void OnEnable()
-        {
-            _inputActions = new InputSystem_Actions();
-            if (_inputActions == null)
-            {
-                Debug.Log("InputActions reference not set");
-                return;
-            }
-        }
-
-        public void OnDisable()
-        {
-
-        }
-
         protected override void Update()
         {
             base.Update();

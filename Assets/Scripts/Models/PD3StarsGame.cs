@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using PD3Stars.Models.ColtModels;
+using PD3Stars.Models.ElPrimoModels;
 
 namespace PD3Stars.Models
 {
@@ -19,6 +20,17 @@ namespace PD3Stars.Models
                 Singleton<HUD>.Instance.Brawler = colt;
             }
             OnBrawlerSpawned(colt);
+        }
+
+        public void AddElPrimo()
+        {
+            ElPrimo elPrimo = new ElPrimo();
+            _brawlers.Add(elPrimo);
+            if(_brawlers.Count == 1)
+            {
+                Singleton<HUD>.Instance.Brawler = elPrimo;
+            }
+            OnBrawlerSpawned(elPrimo);
         }
 
         public void AddBrawler(Brawler brawler)
