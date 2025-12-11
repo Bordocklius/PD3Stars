@@ -3,6 +3,7 @@ using PD3Stars.Models.ColtModels;
 using PD3Stars.Models.ElPrimoModels;
 using PD3Stars.Singleton;
 using PD3Stars.Strategies.Movement;
+using PD3Stars.Strategies.PA;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace PD3Stars.Presenters
 
         private void Awake()
         {
+            inputActions = new InputSystem_Actions();
             Model = Singleton<PD3StarsGame>.Instance;
             Model.AddColt();
         }
@@ -93,11 +95,16 @@ namespace PD3Stars.Presenters
 
             if(_brawlerObjects.Count == 1)
             {
+
                 Camera.main.GetComponent<CameraFollowScript>().SetTarget(brawlerPresenter.transform);
                 brawlerPresenter.Camera = Camera.main;
                 IMovementStrategy movementStrategy = new UserMovementStrategy(brawler, brawlerPresenter);
-                (movementStrategy as UserMovementStrategy).SetInputActions(new InputSystem_Actions());
+                (movementStrategy as UserMovementStrategy).SetInputActions(inputActions);
                 brawlerPresenter.MovementStrategy = movementStrategy;
+
+                IPAStrategy pAStrategy = new UserPAStrategy(brawler, brawlerPresenter);
+                (pAStrategy as UserPAStrategy).SetInputActions(inputActions);
+                brawlerPresenter.PAStrategy = pAStrategy;
             }
             else
             {

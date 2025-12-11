@@ -14,9 +14,7 @@ namespace PD3Stars.Strategies.Movement
     {
         private InputSystem_Actions _inputActions;
         private InputAction _moveAction;
-
-        private Camera _camera;
-        private LayerMask _groundMask;
+        
         private Transform _transform;
         private float _rotationSpeed;
 
@@ -44,11 +42,10 @@ namespace PD3Stars.Strategies.Movement
             _moveAction.canceled += ctx => MoveDirection = Vector2.zero;
         }
 
-        private void CacheValuesFromContext()
+        protected override void CacheValuesFromContext()
         {
-            _camera = ContextPresenter.Camera;
+            base.CacheValuesFromContext();
             _transform = ContextPresenter.transform;
-            _groundMask = ContextPresenter.GroundMask;
             _rotationSpeed = ContextPresenter.RotationSpeed;
         }
 
@@ -87,17 +84,6 @@ namespace PD3Stars.Strategies.Movement
             }
             else
                 RotationDirection = _previousLookDirection;
-        }
-
-        private Vector3 GetMousePosition()
-        {
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-            Vector3 targetPoint = new Vector3();
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _groundMask))
-            {
-                targetPoint = hitInfo.point;
-            }
-            return targetPoint;
         }
     }
 }

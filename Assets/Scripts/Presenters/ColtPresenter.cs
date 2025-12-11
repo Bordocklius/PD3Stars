@@ -32,10 +32,10 @@ namespace PD3Stars.Presenters
             (Model as Colt).MagSize = _magSize;
         }
 
-        protected override void OnPrimaryAttack(InputValue inputValue)
+        public override void OnPrimaryAttack(Vector3 attackDirection)
         {
             //Debug.Log("Click");
-            base.OnPrimaryAttack(inputValue);
+            base.OnPrimaryAttack(attackDirection);
         }
 
         protected virtual void Model_OnColtFired(object sender, ColtFiredEventArgs e)

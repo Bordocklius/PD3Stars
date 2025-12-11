@@ -1,5 +1,7 @@
+using Codice.CM.Common;
 using PD3Stars.Models;
 using PD3Stars.Strategies.Movement;
+using PD3Stars.Strategies.PA;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -38,17 +40,21 @@ namespace PD3Stars.Presenters
         private HealthBarPresenter _HBPresenter;
 
 
-        private IMovementStrategy _movementStrategy;
-        public IMovementStrategy MovementStrategy
-        {
-            get { return _movementStrategy; }
-            set
-            {
-                if (_movementStrategy == value)
-                    return;
-                _movementStrategy = value;
-            }
-        }
+        //private IMovementStrategy _movementStrategy;
+        //public IMovementStrategy MovementStrategy
+        //{
+        //    get { return _movementStrategy; }
+        //    set
+        //    {
+        //        if (_movementStrategy == value)
+        //            return;
+        //        _movementStrategy = value;
+        //    }
+        //}
+
+        public IMovementStrategy MovementStrategy { get; set; }
+
+        public IPAStrategy PAStrategy { get; set; }
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -96,6 +102,10 @@ namespace PD3Stars.Presenters
                 HandleRotation();
             }
             
+            if(PAStrategy != null)
+            {
+                PAStrategy.Update(Time.deltaTime);
+            }
         }
 
         private void HandleMovement()
@@ -135,18 +145,18 @@ namespace PD3Stars.Presenters
             //}
         }
 
-        protected virtual void PA_Performed(InputAction.CallbackContext ctx)
-        {
-            if (ctx.performed)
-            {
-                Model?.SetAttackTarget(GetMousePosition());
-                Model?.PARequested();
-            }
-        }
+        //protected virtual void PA_Performed(InputAction.CallbackContext ctx)
+        //{
+        //    if (ctx.performed)
+        //    {
+        //        Model?.SetAttackTarget(GetMousePosition());
+        //        Model?.PARequested();
+        //    }
+        //}
 
-        protected virtual void OnPrimaryAttack(InputValue inputValue)
+        public virtual void OnPrimaryAttack(Vector3 attackDirection)
         {
-            Model?.SetAttackTarget(GetMousePosition());
+            Model?.SetAttackTarget(attackDirection);
             Model?.PARequested();
         }
 
