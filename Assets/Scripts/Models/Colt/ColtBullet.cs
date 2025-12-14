@@ -23,12 +23,22 @@ namespace PD3Stars.Models.ColtModels
 
                 _ttl = value;
                 if (_ttl >= MaxTTL)
-                    OnTTLExpired();
+                {
+                    OnPropertyChanged();
+                    this.IsActive = false;
+                }
+                    
             }
         }
 
         public Vector3 BulletDirection;
 
+        public void ResetBullet()
+        {
+            TTL = 0f;
+            BulletDirection = Vector3.zero;
+            this.IsActive = true;
+        }
 
         public override void FixedUpdate(float fixedDeltaTime)
         {
@@ -42,6 +52,7 @@ namespace PD3Stars.Models.ColtModels
         private void OnTTLExpired()
         {
             TTLExpired?.Invoke(this, EventArgs.Empty);
+            this.IsActive = false;
         }
 
         public void SetBulletDirection(Vector3 startpos, Vector3 target)

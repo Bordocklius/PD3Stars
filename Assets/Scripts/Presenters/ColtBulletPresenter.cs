@@ -16,17 +16,17 @@ namespace PD3Stars.Presenters
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //if(e.PropertyName.Equals(nameof(ColtBullet.TTLTimer)))
-            //    OnTTLTimerExpired();
+            if (e.PropertyName.Equals(nameof(ColtBullet.IsActive)))
+                Model_OnDeactivated();
         }
 
         protected override void ModelSetInitialisation(ColtBullet previousModel)
         {
-            if(previousModel != null)
-            {
-                previousModel.TTLExpired -= Model_OnTTLTimerExpired;
-            }
-            Model.TTLExpired += Model_OnTTLTimerExpired;
+            //if(previousModel != null)
+            //{
+            //    previousModel.TTLExpired -= Model_OnTTLTimerExpired;
+            //}
+            //Model.TTLExpired += Model_OnTTLTimerExpired;
         }
 
         protected override void FixedUpdate()
@@ -41,9 +41,15 @@ namespace PD3Stars.Presenters
             _transform.rotation = Quaternion.LookRotation(Model.BulletDirection);
         }
 
-        protected virtual void Model_OnTTLTimerExpired(object sender, EventArgs e)
+        protected virtual void Model_OnDeactivated()
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
+
+        //protected virtual void Model_OnTTLTimerExpired(object sender, EventArgs e)
+        //{
+        //    Destroy(this.gameObject);
+        //}
+
     }
 }
