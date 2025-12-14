@@ -3,15 +3,18 @@ using System;
 using System.ComponentModel;
 using UnityEngine;
 using PD3Stars.Models.ColtModels;
+using PD3Stars.ScriptableObjects;
 
 namespace PD3Stars.Presenters
 {
     public class ColtBulletPresenter : PresenterBaseClass<ColtBullet>
     {
         [SerializeField]
-        private Transform _transform;
+        private InitialWeaponStats _initialBulletStats;
 
         [SerializeField]
+        private Transform _transform;
+
         private float _bulletSpeed;
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -27,6 +30,15 @@ namespace PD3Stars.Presenters
             //    previousModel.TTLExpired -= Model_OnTTLTimerExpired;
             //}
             //Model.TTLExpired += Model_OnTTLTimerExpired;
+        }
+
+        private void Start()
+        {
+            if(_transform == null)
+                _transform = transform;
+
+            Model.Damage = _initialBulletStats.Damage;
+            _bulletSpeed = _initialBulletStats.Speed;
         }
 
         protected override void FixedUpdate()
@@ -50,6 +62,15 @@ namespace PD3Stars.Presenters
         //{
         //    Destroy(this.gameObject);
         //}
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.TryGetComponent<IDamageable>(out IDamageable damagableObj))
+            {
+                damagableObj.TakeDamage(Model.Damage);
+                Model.IsActive = false;
+            }
+        }
 
     }
 }

@@ -3,11 +3,12 @@ using UnityEngine;
 using PD3Stars.Models;
 
 namespace PD3Stars.Models.ColtModels
-
 {
     public class ColtBullet : UnityModelBaseClass
     {
         public event EventHandler TTLExpired;
+
+        public float Damage { get; set; } = 10;
 
         public float MaxTTL { get; set; } = 2f;
 

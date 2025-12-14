@@ -3,66 +3,71 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "InputReaderSO", menuName = "Scriptable Objects/InputReaderSO")]
-public class InputReaderSO : ScriptableObject
+namespace PD3Stars.ScriptableObjects
 {
-    // InputAction generated script
-    private InputSystem_Actions _inputActions;
-
-    private InputAction _moveAction;
-    private InputAction _paAction;
-
-    public event EventHandler<InputReaderEventArgs> Move;
-    public event EventHandler<InputReaderEventArgs> PA;
-
-    private void OnEnable()
+    [CreateAssetMenu(fileName = "InputReaderSO", menuName = "Scriptable Objects/InputReaderSO")]
+    public class InputReaderSO : ScriptableObject
     {
-        if(_inputActions == null)
-            _inputActions = new InputSystem_Actions();
+        // InputAction generated script
+        private InputSystem_Actions _inputActions;
 
-        _inputActions.Enable();
-        _moveAction = _inputActions.PlayerInput.Move;
-        _paAction = _inputActions.PlayerInput.PrimaryAttack;
+        private InputAction _moveAction;
+        private InputAction _paAction;
 
-        _moveAction.Enable();
-        _moveAction.performed += Move_Performed;
-        _moveAction.canceled += Move_Performed;
+        public event EventHandler<InputReaderEventArgs> Move;
+        public event EventHandler<InputReaderEventArgs> PA;
 
-        _paAction.Enable();
-        _paAction.performed += PA_Performed;
+        private void OnEnable()
+        {
+            if (_inputActions == null)
+                _inputActions = new InputSystem_Actions();
 
+            _inputActions.Enable();
+            _moveAction = _inputActions.PlayerInput.Move;
+            _paAction = _inputActions.PlayerInput.PrimaryAttack;
+
+            _moveAction.Enable();
+            _moveAction.performed += Move_Performed;
+            _moveAction.canceled += Move_Performed;
+
+            _paAction.Enable();
+            _paAction.performed += PA_Performed;
+
+        }
+
+        private void OnDisable()
+        {
+            _inputActions.Disable();
+            _moveAction.Disable();
+            _moveAction.performed -= Move_Performed;
+            _moveAction.canceled -= Move_Performed;
+
+            _paAction.Disable();
+            _paAction.performed -= PA_Performed;
+        }
+
+        private void Move_Performed(InputAction.CallbackContext ctx)
+        {
+            Move?.Invoke(this, new InputReaderEventArgs(ctx));
+        }
+
+        protected virtual void PA_Performed(InputAction.CallbackContext ctx)
+        {
+            PA?.Invoke(this, new InputReaderEventArgs(ctx));
+        }
     }
 
-    private void OnDisable()
-    {
-        _inputActions.Disable();
-        _moveAction.Disable();
-        _moveAction.performed -= Move_Performed;
-        _moveAction.canceled -= Move_Performed;
 
-        _paAction.Disable();
-        _paAction.performed -= PA_Performed;
-    }
-
-    private void Move_Performed(InputAction.CallbackContext ctx)
+    public class InputReaderEventArgs : EventArgs
     {
-        Move?.Invoke(this, new InputReaderEventArgs(ctx));            
-    }
+        public InputAction.CallbackContext Ctx { get; private set; }
 
-    protected virtual void PA_Performed(InputAction.CallbackContext ctx)
-    {
-        PA?.Invoke(this, new InputReaderEventArgs(ctx));
+        public InputReaderEventArgs(InputAction.CallbackContext newValue)
+        {
+            Ctx = newValue;
+        }
     }
 }
 
 
-public class InputReaderEventArgs : EventArgs
-{
-    public InputAction.CallbackContext Ctx { get; private set; }
-
-    public InputReaderEventArgs(InputAction.CallbackContext newValue)
-    {
-        Ctx = newValue;
-    }
-}
 

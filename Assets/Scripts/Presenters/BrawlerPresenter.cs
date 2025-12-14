@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace PD3Stars.Presenters
 {
-    public abstract class BrawlerPresenter : PresenterBaseClass<Brawler>
+    public abstract class BrawlerPresenter : PresenterBaseClass<Brawler>, IDamageable
     {
         [Header("Movement")]
         [SerializeField]
@@ -141,6 +141,11 @@ namespace PD3Stars.Presenters
                 targetPoint = hitInfo.point;
             }
             return targetPoint;
+        }
+
+        public void TakeDamage(float damage)
+        {            
+            Model.Health -= damage;
         }
 
         private void ShowHealth()

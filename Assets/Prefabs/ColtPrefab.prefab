@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 6606970783869764773}
   - component: {fileID: 6907525338339391422}
   - component: {fileID: 5346826130485305286}
+  - component: {fileID: 5299688476980458926}
   m_Layer: 0
   m_Name: ColtPrefab
   m_TagString: Untagged
@@ -450,6 +451,29 @@ MonoBehaviour:
   _coltBulletPrefab: {fileID: 6676062174105204688, guid: a4f7d13117056f7458d01fea53115c65, type: 3}
   _magSize: 8
   _barrelPoint: {fileID: 3873039892871025892}
+--- !u!136 &5299688476980458926
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838767491287739395}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.57
+  m_Height: 2.75
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6822442907441811856
 GameObject:
   m_ObjectHideFlags: 0

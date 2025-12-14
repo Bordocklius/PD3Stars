@@ -2,6 +2,7 @@
 using PD3Stars.Models.ColtModels;
 using PD3Stars.Models.ElPrimoModels;
 using PD3Stars.Network;
+using PD3Stars.ScriptableObjects;
 using PD3Stars.Singleton;
 using PD3Stars.Strategies.Movement;
 using PD3Stars.Strategies.PA;

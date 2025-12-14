@@ -1,5 +1,6 @@
 ﻿using PD3Stars.Models;
 using PD3Stars.Presenters;
+using PD3Stars.ScriptableObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,6 @@
 ﻿using PD3Stars.Models;
 using PD3Stars.Presenters;
+using PD3Stars.ScriptableObjects;
 using PD3Stars.Strategies;
 using PD3Stars.Strategies.PA;
 using System;

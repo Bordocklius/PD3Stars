@@ -44,7 +44,6 @@ namespace PD3Stars.Presenters
         {
             //Debug.Log("Click");
             base.OnPrimaryAttack(attackDirection);
-            Debug.Log("Pjew");
         }
 
         protected virtual void Model_OnColtFired(object sender, ColtFiredEventArgs e)
