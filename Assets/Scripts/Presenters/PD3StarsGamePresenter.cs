@@ -1,6 +1,7 @@
 ﻿using PD3Stars.Models;
 using PD3Stars.Models.ColtModels;
 using PD3Stars.Models.ElPrimoModels;
+using PD3Stars.Network;
 using PD3Stars.Singleton;
 using PD3Stars.Strategies.Movement;
 using PD3Stars.Strategies.PA;
@@ -16,11 +17,10 @@ namespace PD3Stars.Presenters
     public class PD3StarsGamePresenter: PresenterBaseClass<PD3StarsGame>
     {
         public GameObject ColtPresenterPrefab;
-        private ColtPresenter _coltPresenter;
         public PlayerInput PlayerInput;
-        public InputSystem_Actions inputActions;
         public UIDocument HUD;
         public HUDPresenter HUDPresenter;
+        public InputReaderSO InputReader;
 
         [SerializeField]
         private List<GameObject> _prefabByName = new List<GameObject>();
@@ -28,9 +28,8 @@ namespace PD3Stars.Presenters
 
         private void Awake()
         {
-            inputActions = new InputSystem_Actions();
             Model = Singleton<PD3StarsGame>.Instance;
-            Model.AddColt();
+            //Model.AddColt();
             //Model.AddElPrimo();
         }
 
@@ -59,30 +58,6 @@ namespace PD3Stars.Presenters
 
             GameObject brawlerObj = Instantiate(prefab, transform);
             InitializePresenter(e.Brawler, brawlerObj);
-
-            //if(e.Brawler is Colt colt)
-            //{
-            //    GameObject coltObj = Instantiate(ColtPresenterPrefab, transform);
-            //    _coltPresenter = coltObj.GetComponent<ColtPresenter>();
-            //    _coltPresenter.Model = colt;
-            //    _coltPresenter.transform.position = new Vector3(0, 0, 0);
-            //    _coltPresenter.transform.rotation = Quaternion.identity;
-            //    _coltPresenter.gameObject.SetActive(true);
-            //    IMovementStrategy movementStrategy = new UserMovementStrategy(_coltPresenter.Model, _coltPresenter);
-            //    //_coltPresenter.AddPlayerInput(PlayerInput);
-            //    _coltPresenter.AddHBPresenter();
-            //}
-            //if(e.Brawler is ElPrimo elPrimo)
-            //{
-            //    GameObject coltObj = Instantiate(ColtPresenterPrefab, transform);
-            //    _coltPresenter = coltObj.GetComponent<ColtPresenter>();
-            //    _coltPresenter.Model = colt;
-            //    _coltPresenter.transform.position = new Vector3(0, 0, 0);
-            //    _coltPresenter.transform.rotation = Quaternion.identity;
-            //    _coltPresenter.gameObject.SetActive(true);
-            //    _coltPresenter.AddPlayerInput(PlayerInput);
-            //    _coltPresenter.AddHBPresenter();
-            //}
         }
 
         private void InitializePresenter(Brawler brawler, GameObject gameobj)
@@ -100,11 +75,11 @@ namespace PD3Stars.Presenters
                 Camera.main.GetComponent<CameraFollowScript>().SetTarget(brawlerPresenter.transform);
                 brawlerPresenter.Camera = Camera.main;
                 IMovementStrategy movementStrategy = new UserMovementStrategy(brawler, brawlerPresenter);
-                (movementStrategy as UserMovementStrategy).SetInputActions(inputActions);
+                (movementStrategy as UserMovementStrategy).SetInputActions(InputReader);
                 brawlerPresenter.MovementStrategy = movementStrategy;
 
                 IPAStrategy pAStrategy = new UserPAStrategy(brawler, brawlerPresenter);
-                (pAStrategy as UserPAStrategy).SetInputActions(inputActions);
+                (pAStrategy as UserPAStrategy).SetInputActions(InputReader);
                 brawlerPresenter.PAStrategy = pAStrategy;
             }
             else

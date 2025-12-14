@@ -12,11 +12,9 @@ namespace PD3Stars.Strategies.Movement
 {
     public class UserMovementStrategy: MovementStrategyBase
     {
-        private InputSystem_Actions _inputActions;
-        private InputAction _moveAction;
+        private InputReaderSO _inputReader;
         
         private Transform _transform;
-        private float _rotationSpeed;
 
         private Vector3 _previousLookDirection = Vector3.forward;
 
@@ -24,42 +22,39 @@ namespace PD3Stars.Strategies.Movement
             base(context, contextPresenter)
         { }
 
-        public void SetInputActions(InputSystem_Actions inputActions)
+        public void SetInputActions(InputReaderSO inputReader)
         {
-            if(_inputActions != null)
-                DisableActions();
+            if (_inputReader != null)
+                UnsubToActions();
 
-            _inputActions = inputActions;
-            EnableActions();
+            _inputReader = inputReader;
+            //_inputActions = inputActions;
+            SubToActions();
             CacheValuesFromContext();
         }
 
-        private void EnableActions()
+        private void SubToActions()
         {
-            _moveAction = _inputActions.PlayerInput.Move;
-            _moveAction.Enable();
-            _moveAction.performed += Move_Performed;
-            _moveAction.canceled += ctx => MoveDirection = Vector2.zero;
+            _inputReader.Move += Move_Performed;
+        }
+
+        private void UnsubToActions()
+        {
+            _inputReader.Move -= Move_Performed;
         }
 
         protected override void CacheValuesFromContext()
         {
             base.CacheValuesFromContext();
             _transform = ContextPresenter.transform;
-            _rotationSpeed = ContextPresenter.RotationSpeed;
         }
 
-        private void DisableActions()
+        private void Move_Performed(object sender, InputReaderEventArgs e)
         {
-            _moveAction.Disable();
-            _moveAction.performed -= Move_Performed;
-            _moveAction.canceled -= ctx => MoveDirection = Vector2.zero;
-        }
-
-        private void Move_Performed(InputAction.CallbackContext ctx)
-        {
-            if (ctx.performed)
-                MoveDirection = ctx.ReadValue<Vector2>();
+            if (e.Ctx.performed)
+                MoveDirection = e.Ctx.ReadValue<Vector2>();
+            else if(e.Ctx.canceled)
+                MoveDirection = Vector2.zero;
         }
 
         public override void Update(float deltaTime)

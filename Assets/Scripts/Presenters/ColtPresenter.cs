@@ -30,11 +30,11 @@ namespace PD3Stars.Presenters
         {
             //Debug.Log("Click");
             base.OnPrimaryAttack(attackDirection);
+            Debug.Log("Pjew");
         }
 
         protected virtual void Model_OnColtFired(object sender, ColtFiredEventArgs e)
         {
-            Debug.Log("Pjew");
             GameObject bullet = Instantiate(_coltBulletPrefab);
             bullet.transform.position = _barrelPoint.position;
             e.ColtBullet.SetBulletDirection(_barrelPoint.position, Model.AttackTarget);

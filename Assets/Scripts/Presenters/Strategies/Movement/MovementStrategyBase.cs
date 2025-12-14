@@ -26,7 +26,7 @@ namespace PD3Stars.Strategies.Movement
 
 
 		private Vector3 _rotationDirection;
-		public Vector3 RotationDirection
+		public virtual Vector3 RotationDirection
 		{
 			get { return _rotationDirection; }
 			set

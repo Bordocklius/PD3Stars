@@ -11,12 +11,22 @@ namespace PD3Stars.Strategies.Movement
 {
     public class RotateMovementStrategy : MovementStrategyBase
     {
+        private float _rotationSpeed = 90f;
+        private float _angle = 0f;
+
+        private float _yaw;
+
         public RotateMovementStrategy(Brawler context, BrawlerPresenter contextPresenter):
             base(context, contextPresenter)
         {
         }
 
-        private Vector2 _rotateVector = new Vector2(1, 0);
-        public override Vector2 MoveDirection { get => _rotateVector; }
+        public override void Update(float deltaTime)
+        {
+            _yaw += ContextPresenter.RotationSpeed * deltaTime;
+            float rad = _yaw * Mathf.Deg2Rad;
+            RotationDirection = new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));
+        }
+
     }
 }

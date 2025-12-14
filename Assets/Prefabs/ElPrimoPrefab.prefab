@@ -441,7 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 5
   <Transform>k__BackingField: {fileID: 6606970783869764773}
-  <RotationSpeed>k__BackingField: 5
+  <RotationSpeed>k__BackingField: 360
   <Camera>k__BackingField: {fileID: 0}
   <GroundMask>k__BackingField:
     serializedVersion: 2

@@ -461,6 +461,7 @@ MonoBehaviour:
   PlayerInput: {fileID: 1109648971}
   HUD: {fileID: 0}
   HUDPresenter: {fileID: 0}
+  InputReader: {fileID: 11400000, guid: a08bf89ba46248246b4dfaec6bca5521, type: 2}
   _prefabByName:
   - {fileID: 5838767491287739395, guid: b71a512f46d2c514baff36fc4e5f5aee, type: 3}
   - {fileID: 5838767491287739395, guid: 3db4dec468d65ee4e8753faff98b2799, type: 3}

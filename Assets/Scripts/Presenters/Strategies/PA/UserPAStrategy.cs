@@ -14,50 +14,48 @@ namespace PD3Stars.Strategies.PA
 {
     public class UserPAStrategy : PAStrategyBase
     {
-        private InputSystem_Actions _inputActions;
-        private InputAction _paAction;
+        private InputReaderSO _inputReader;
 
         public UserPAStrategy(Brawler context, BrawlerPresenter contextPresenter) : base(context, contextPresenter)
         {
         }
 
-        public void SetInputActions(InputSystem_Actions inputActions)
+        public void SetInputActions(InputReaderSO inputReader)
         {
-            if (_inputActions != null)
-                DisableActions();
+            if (_inputReader != null)
+                UnsubToActions();
 
-            _inputActions = inputActions;
-            EnableActions();
+            _inputReader = inputReader;
+            SubToActions();
             CacheValuesFromContext();
         }
 
-        private void EnableActions()
+        private void SubToActions()
         {
-            _paAction = _inputActions.PlayerInput.PrimaryAttack;
-            _paAction.Enable();
-            _paAction.performed += PA_Performed;
+            _inputReader.PA += PA_Performed;
         }
 
-        //protected override void CacheValuesFromContext()
-        //{
-        //    base.CacheValuesFromContext();
-        //    _transform = ContextPresenter.transform;
-        //    _rotationSpeed = ContextPresenter.RotationSpeed;
-        //}
-
-        private void DisableActions()
+        private void UnsubToActions()
         {
-            _paAction.Disable();
-            _paAction.performed -= PA_Performed;
+            _inputReader.PA -= PA_Performed;
         }
 
-        protected virtual void PA_Performed(InputAction.CallbackContext ctx)
+        protected virtual void PA_Performed(object sender, InputReaderEventArgs e)
         {
-            if (ctx.performed)
+            if (e.Ctx.performed)
             {
                 AttackDirection = GetMousePosition();
                 ContextPresenter.OnPrimaryAttack(AttackDirection);
             }
         }
+
+        //protected virtual void PA_Performed(InputAction.CallbackContext ctx)
+        //{
+        //    if (ctx.performed)
+        //    {
+        //        AttackDirection = GetMousePosition();
+        //        ContextPresenter.OnPrimaryAttack(AttackDirection);
+        //    }
+        //}
     }
 }

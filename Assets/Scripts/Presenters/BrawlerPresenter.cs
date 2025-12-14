@@ -100,20 +100,16 @@ namespace PD3Stars.Presenters
                 Vector3 movement = new Vector3(MovementStrategy.MoveDirection.x, 0, MovementStrategy.MoveDirection.y) * _movementSpeed * Time.deltaTime;
                 Transform.position += movement;
             }
-            //if (_movementInput != null)
-            //{
-            //    Vector3 movement = new Vector3(_movementInput.x, 0, _movementInput.y) * _movementSpeed * Time.deltaTime;
-            //    _transform.position += movement;
-            //}
         }
 
         private void HandleRotation()
         {
             if(MovementStrategy.RotationDirection != Vector3.zero)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(MovementStrategy.RotationDirection, Vector3.up);
-                //Transform.rotation = Quaternion.RotateTowards(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
-                Transform.rotation = Quaternion.Slerp(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
+                Vector3 direction = MovementStrategy.RotationDirection.normalized;
+                Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+                Transform.rotation = Quaternion.RotateTowards(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
+                //Transform.rotation = Quaternion.Slerp(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
             }
 
             //// Look towards ground based on where mouse is positioned
@@ -129,15 +125,6 @@ namespace PD3Stars.Presenters
             //    Transform.rotation = Quaternion.Slerp(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
             //}
         }
-
-        //protected virtual void PA_Performed(InputAction.CallbackContext ctx)
-        //{
-        //    if (ctx.performed)
-        //    {
-        //        Model?.SetAttackTarget(GetMousePosition());
-        //        Model?.PARequested();
-        //    }
-        //}
 
         public virtual void OnPrimaryAttack(Vector3 attackDirection)
         {
