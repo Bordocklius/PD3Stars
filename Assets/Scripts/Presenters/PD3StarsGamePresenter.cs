@@ -78,14 +78,17 @@ namespace PD3Stars.Presenters
                 (movementStrategy as UserMovementStrategy).SetInputActions(InputReader);
                 brawlerPresenter.MovementStrategy = movementStrategy;
 
-                IPAStrategy pAStrategy = new UserPAStrategy(brawler, brawlerPresenter);
-                (pAStrategy as UserPAStrategy).SetInputActions(InputReader);
-                brawlerPresenter.PAStrategy = pAStrategy;
+                IPAStrategy paStrategy = new UserPAStrategy(brawler, brawlerPresenter);
+                (paStrategy as UserPAStrategy).SetInputActions(InputReader);
+                brawlerPresenter.PAStrategy = paStrategy;
             }
             else
             {
                 IMovementStrategy movementStrategy = new RotateMovementStrategy(brawler, brawlerPresenter);
                 brawlerPresenter.MovementStrategy = movementStrategy;
+
+                IPAStrategy paStrategy = new PA_ASAPStrategy(brawler, brawlerPresenter);
+                brawlerPresenter.PAStrategy = paStrategy;
             }
         }
     }

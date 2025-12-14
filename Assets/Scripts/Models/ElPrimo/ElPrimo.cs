@@ -23,12 +23,12 @@ namespace PD3Stars.Models.ElPrimoModels
 
         public override void PARequested()
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override void PAExecuted()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
