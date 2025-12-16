@@ -46,7 +46,7 @@ namespace PD3Stars.Strategies.PA
             if (e.Ctx.performed)
             {
                 AttackDirection = GetMousePosition();
-                ContextPresenter.OnPrimaryAttack(AttackDirection);
+                ContextPresenter.OnPrimaryAttack();
             }
         }
 

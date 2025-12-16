@@ -23,7 +23,7 @@ namespace PD3Stars.Presenters
             }
         }
 
-        public override void OnPrimaryAttack(Vector3 attackDirection)
+        public override void OnPrimaryAttack()
         {
             Debug.Log("ElPrimo bonk");
         }

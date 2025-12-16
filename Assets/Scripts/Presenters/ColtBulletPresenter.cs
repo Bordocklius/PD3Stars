@@ -15,6 +15,8 @@ namespace PD3Stars.Presenters
         [SerializeField]
         private Transform _transform;
 
+        public Vector3 BulletDirection;
+
         private float _bulletSpeed;
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -49,8 +51,8 @@ namespace PD3Stars.Presenters
 
         private void HandleMovement()
         {
-            _transform.position += Model.BulletDirection * _bulletSpeed * Time.fixedDeltaTime;
-            _transform.rotation = Quaternion.LookRotation(Model.BulletDirection);
+            _transform.position += BulletDirection * _bulletSpeed * Time.fixedDeltaTime;
+            _transform.rotation = Quaternion.LookRotation(BulletDirection);
         }
 
         protected virtual void Model_OnDeactivated()

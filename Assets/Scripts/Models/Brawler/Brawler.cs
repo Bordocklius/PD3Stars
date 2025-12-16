@@ -34,8 +34,6 @@ namespace PD3Stars.Models
         protected BrawlerHPFSM HPFSM;
         protected BrawlerPAFSM PAFSM;
 
-        public Vector3 AttackTarget;
-
         public virtual string PrefabName => "Brawler";
 
         public Brawler()
@@ -52,11 +50,6 @@ namespace PD3Stars.Models
         public abstract void PARequested();
 
         protected abstract void PAExecuted();
-
-        public void SetAttackTarget(Vector3 target)
-        {
-            AttackTarget = target;
-        }
 
         public void RegenerateHealth(float fixedDeltaTime)
         {

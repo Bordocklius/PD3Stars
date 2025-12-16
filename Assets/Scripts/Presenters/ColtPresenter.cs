@@ -40,18 +40,21 @@ namespace PD3Stars.Presenters
             }
         }
 
-        public override void OnPrimaryAttack(Vector3 attackDirection)
+        public override void OnPrimaryAttack()
         {
-            //Debug.Log("Click");
-            base.OnPrimaryAttack(attackDirection);
+            base.OnPrimaryAttack();
+
         }
 
         protected virtual void Model_OnColtFired(object sender, ColtFiredEventArgs e)
         {
             GameObject bullet = _bulletObjPool[e.ColtBullet];
             bullet.transform.position = _barrelPoint.position;
-            e.ColtBullet.SetBulletDirection(_barrelPoint.position, Model.AttackTarget);
-            bullet.GetComponent<ColtBulletPresenter>().Model = e.ColtBullet;
+            ColtBulletPresenter bulletPresenter = bullet.GetComponent<ColtBulletPresenter>();
+            bulletPresenter.Model = e.ColtBullet;
+            Vector3 direction = (PAStrategy.AttackDirection - _barrelPoint.position).normalized;
+            direction.y = 0;
+            bulletPresenter.BulletDirection = direction;
             bullet.SetActive(true);
         }
 

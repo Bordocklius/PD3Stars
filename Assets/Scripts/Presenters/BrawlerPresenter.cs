@@ -34,7 +34,6 @@ namespace PD3Stars.Presenters
         [field: SerializeField]
         public LayerMask GroundMask { get; private set; }
 
-
         [SerializeField]
         private Image HealthBar;
         private HealthBarPresenter _HBPresenter;
@@ -126,21 +125,9 @@ namespace PD3Stars.Presenters
             //}
         }
 
-        public virtual void OnPrimaryAttack(Vector3 attackDirection)
-        {
-            Model?.SetAttackTarget(attackDirection);
+        public virtual void OnPrimaryAttack()
+        {            
             Model?.PARequested();
-        }
-
-        private Vector3 GetMousePosition()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Vector3 targetPoint = new Vector3();
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, GroundMask))
-            {
-                targetPoint = hitInfo.point;
-            }
-            return targetPoint;
         }
 
         public void TakeDamage(float damage)

@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using PD3Stars.Models;
 
 namespace PD3Stars.Models.ColtModels
@@ -32,12 +31,9 @@ namespace PD3Stars.Models.ColtModels
             }
         }
 
-        public Vector3 BulletDirection;
-
         public void ResetBullet()
         {
             TTL = 0f;
-            BulletDirection = Vector3.zero;
             this.IsActive = true;
         }
 
@@ -56,10 +52,10 @@ namespace PD3Stars.Models.ColtModels
             this.IsActive = false;
         }
 
-        public void SetBulletDirection(Vector3 startpos, Vector3 target)
-        {
-            BulletDirection = (target - startpos).normalized;
-            BulletDirection.y = 0;
-        }
+        //public void SetBulletDirection(Vector3 startpos, Vector3 target)
+        //{
+        //    BulletDirection = (target - startpos).normalized;
+        //    BulletDirection.y = 0;
+        //}
     }
 }
