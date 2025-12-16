@@ -19,7 +19,6 @@ namespace PD3Stars.Presenters
     {
         public GameObject ColtPresenterPrefab;
         public PlayerInput PlayerInput;
-        public UIDocument HUD;
         public HUDPresenter HUDPresenter;
         public InputReaderSO InputReader;
 
