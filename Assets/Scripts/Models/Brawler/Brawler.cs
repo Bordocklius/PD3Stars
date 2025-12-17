@@ -31,6 +31,10 @@ namespace PD3Stars.Models
 
         public float HealthProgress { get => Health / MAXHEALTH; }
 
+        private float _paLoadTimer;
+        public float PALoadingTime = 2f;
+        public float PAProgress { get => _paLoadTimer / PALoadingTime; }
+
         protected BrawlerHPFSM HPFSM;
         protected BrawlerPAFSM PAFSM;
 
@@ -55,6 +59,11 @@ namespace PD3Stars.Models
         {
             // Regenerate 13% of maxhealth/sec
             Health += fixedDeltaTime * 0.13f * MAXHEALTH;
+        }
+
+        public void CountPATimer(float fixedDeltaTime)
+        {
+            _paLoadTimer += fixedDeltaTime;
         }
 
         public void ReceiveDamage(float damage)

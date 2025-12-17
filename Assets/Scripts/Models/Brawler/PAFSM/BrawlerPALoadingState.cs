@@ -17,7 +17,8 @@ namespace PD3Stars.Models
 
             public override void FixedUpdate(float fixedDeltaTime)
             {
-                _timer += fixedDeltaTime;
+                Context.CountPATimer(fixedDeltaTime);
+                //_timer += fixedDeltaTime;
                 if(_timer >= LoadingTime)
                 {
                     FSM.TransitionTo(FSM.BrawlerPAReadyState);
