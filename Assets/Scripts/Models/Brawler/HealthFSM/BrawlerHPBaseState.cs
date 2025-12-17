@@ -33,6 +33,11 @@ namespace PD3Stars.Models
             }
             public virtual void OnExit() { }
 
+            public virtual void TakeDamage(float damage)
+            {
+                Context.Health -= damage;
+            }
+
         }
     }    
 }

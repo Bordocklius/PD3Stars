@@ -57,6 +57,11 @@ namespace PD3Stars.Models
             Health += fixedDeltaTime * 0.13f * MAXHEALTH;
         }
 
+        public void ReceiveDamage(float damage)
+        {
+            HPFSM.CurrentState.TakeDamage(damage);
+        }
+
         protected virtual void OnBrawlerHealthChanged()
         {
             HealthChanged?.Invoke(this, EventArgs.Empty);

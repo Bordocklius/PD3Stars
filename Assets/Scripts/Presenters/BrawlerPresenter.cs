@@ -132,7 +132,7 @@ namespace PD3Stars.Presenters
 
         public void TakeDamage(float damage)
         {            
-            Model.Health -= damage;
+            Model?.ReceiveDamage(damage);
         }
 
         private void ShowHealth()

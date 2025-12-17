@@ -1,5 +1,3 @@
-using PD3Stars.Models;
-using System;
 using System.ComponentModel;
 using UnityEngine;
 using PD3Stars.Models.ColtModels;

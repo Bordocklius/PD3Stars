@@ -19,7 +19,7 @@ namespace PD3Stars.Presenters
             Model = model;
             FillImage = fillImage;
             Model.HealthChanged += Model_OnHealthChanged;
-            UpdateHealthBar(0f);
+            UpdateHealthBar(Model.HealthProgress);
         }
 
         protected virtual void Model_OnHealthChanged(object sender, EventArgs e)
