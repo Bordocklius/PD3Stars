@@ -1,13 +1,9 @@
 using System;
-using UnityEngine;
 
 namespace PD3Stars.Models
 {
-    public abstract partial class Brawler : UnityModelBaseClass, IHealthBar
+    public abstract partial class Brawler : UnityModelBaseClass, IHealthBar, IHUDProvider
     {
-        public event EventHandler HealthChanged;
-        public event EventHandler<BrawlerHealthEventArgs> HealthChangedValues;
-
         public const float MAXHEALTH = 1000;
         private float _health;
         public float Health
@@ -24,17 +20,27 @@ namespace PD3Stars.Models
                 _health = value;
 
                 OnPropertyChanged();
-                // Invoke Healthchanged event for listeners
-                OnBrawlerHealthChanged();
             }
         }
 
         public float HealthProgress { get => Health / MAXHEALTH; }
 
-        protected float PALoadTimer;
-        public float PALoadingTime = 2f;
+        private float _paLoadTimer;
+        public float PALoadTimer
+        {
+            get { return _paLoadTimer; }
+            set
+            {
+                if (_paLoadTimer == value)
+                    return;
 
-        public float PAProgress { get => PALoadTimer / PALoadingTime; }
+                _paLoadTimer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public float PALoadingTime = 2f;
+        public float PALoadingProgress { get => Math.Clamp(PALoadTimer / PALoadingTime, 0f, 1f) ; }
 
         protected BrawlerHPFSM HPFSM;
         protected BrawlerPAFSM PAFSM;
@@ -70,11 +76,6 @@ namespace PD3Stars.Models
         public void ReceiveDamage(float damage)
         {
             HPFSM.CurrentState.TakeDamage(damage);
-        }
-
-        protected virtual void OnBrawlerHealthChanged()
-        {
-            HealthChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 

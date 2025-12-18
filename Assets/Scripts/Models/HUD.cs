@@ -9,5 +9,14 @@ namespace PD3Stars.Models
     public class HUD
     {
         public Brawler Brawler { get; set; }
+
+        public IHUDProvider[] HUDProviders = new IHUDProvider[3];
+
+        public HUD() { }
+
+        public void AddHUDProvider(IHUDProvider provider)
+        {
+
+        }
     }
 }

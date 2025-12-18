@@ -9,17 +9,26 @@ using PD3Stars.Strategies.PA;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace PD3Stars.Presenters
 {
     public class PD3StarsGamePresenter: PresenterBaseClass<PD3StarsGame>
     {
-        public GameObject ColtPresenterPrefab;
-        public PlayerInput PlayerInput;
-        public HUDPresenter HUDPresenter;
+        [SerializeField]
+        private GameObject _hudTextPrefab;
+        [SerializeField]
+        private RectTransform _hudPrefabContainer;
+        
+        private HUDTextProviderPresenter[] _hudTextPresenters = new HUDTextProviderPresenter[3];
+
+        [SerializeField]
+        private TextMeshProUGUI[] _hpTexts = new TextMeshProUGUI[3];
+        [SerializeField]
+        private TextMeshProUGUI[] _paTexts = new TextMeshProUGUI[3];
+
         public InputReaderSO InputReader;
 
         [SerializeField]
@@ -68,6 +77,13 @@ namespace PD3Stars.Presenters
             brawlerPresenter.transform.position = Vector3.zero;
             brawlerPresenter.transform.rotation = Quaternion.identity;
             brawlerPresenter.AddHBPresenter();
+
+            int count = _brawlerObjects.Count - 1;
+            HUDTextProviderPresenter hudPresenter = new HUDTextProviderPresenter(brawler, _hpTexts[count], _paTexts[count]);
+
+            //GameObject newHUD = Instantiate(_hudTextPrefab, _hudPrefabContainer);
+            //LayoutRebuilder.ForceRebuildLayoutImmediate(_hudPrefabContainer);
+            //HUDTextProviderPresenter hudPresenter = new HUDTextProviderPresenter(brawler,)
 
             if(_brawlerObjects.Count == 1)
             {

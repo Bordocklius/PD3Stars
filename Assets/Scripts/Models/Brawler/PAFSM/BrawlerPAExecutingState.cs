@@ -12,6 +12,10 @@ namespace PD3Stars.Models
         {
             public BrawlerPAExecutingState(BrawlerPAFSM fsm): base(fsm) { }
 
+            public override void OnEnter()
+            {
+                Context.PALoadTimer = 0f;
+            }
         }
 
     }

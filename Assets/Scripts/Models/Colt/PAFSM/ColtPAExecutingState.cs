@@ -33,6 +33,7 @@ namespace PD3Stars.Models.ColtModels
 
             public override void OnEnter()
             {
+                base.OnEnter();
                 _timer = Context.FireDelay;
                 Context.CurrentMagSize = Context.MagSize;
             }            

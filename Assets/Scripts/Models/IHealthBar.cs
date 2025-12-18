@@ -1,10 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PD3Stars.Models
 {
-    public interface IHealthBar
+    public interface IHealthBar: INotifyPropertyChanged
     {
-        public event EventHandler HealthChanged;
+        public float Health { get;}
         public float HealthProgress { get; }
     }
 }

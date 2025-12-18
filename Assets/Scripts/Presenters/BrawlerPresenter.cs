@@ -57,8 +57,8 @@ namespace PD3Stars.Presenters
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals(nameof(Brawler.Health)))
-                ShowHealth();
+            //if (e.PropertyName.Equals(nameof(Brawler.Health)))
+            //    ShowHealth();
         }
 
         //protected virtual void ModelSetInitialisation(TBrawler previousModel)
@@ -133,11 +133,6 @@ namespace PD3Stars.Presenters
         public void TakeDamage(float damage)
         {            
             Model?.ReceiveDamage(damage);
-        }
-
-        private void ShowHealth()
-        {
-            //Debug.Log($"BrawlerHealth: {Model.Health}");
         }
     }
 }
