@@ -9,7 +9,6 @@ namespace PD3Stars.Models.ColtModels
             public new Colt Context => base.Context as Colt;
 
             private float _timer;
-            private int _currentMagSize;
 
             public ColtPAExecutingState(ColtPAFSM fsm) : base(fsm)
             {
@@ -20,9 +19,10 @@ namespace PD3Stars.Models.ColtModels
                 _timer += fixedDeltaTime;
                 if(_timer > Context.FireDelay)
                 {
-                    if(_currentMagSize > 0)
+                    if(Context.CurrentMagSize > 0)
                     {
-                        FireBullet();
+                        _timer -= Context.FireDelay;
+                        Context.PAExecuted();
                     }
                     else
                     {
@@ -34,15 +34,8 @@ namespace PD3Stars.Models.ColtModels
             public override void OnEnter()
             {
                 _timer = Context.FireDelay;
-                _currentMagSize = Context.MagSize;
-            }
-
-            private void FireBullet()
-            {
-                _currentMagSize--;
-                _timer -= Context.FireDelay;
-                Context.PAExecuted();
-            }
+                Context.CurrentMagSize = Context.MagSize;
+            }            
 
         }
     }

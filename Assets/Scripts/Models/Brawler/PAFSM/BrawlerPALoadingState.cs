@@ -10,16 +10,13 @@ namespace PD3Stars.Models
     {
         public class BrawlerPALoadingState: BrawlerPABaseState
         {
-            private float _timer;
-            public float LoadingTime { get; set; } = 2f;
-
             public BrawlerPALoadingState(BrawlerPAFSM fsm): base(fsm) { }
 
             public override void FixedUpdate(float fixedDeltaTime)
             {
                 Context.CountPATimer(fixedDeltaTime);
                 //_timer += fixedDeltaTime;
-                if(_timer >= LoadingTime)
+                if(Context.PALoadTimer >= Context.PALoadingTime)
                 {
                     FSM.TransitionTo(FSM.BrawlerPAReadyState);
                 }
@@ -27,7 +24,7 @@ namespace PD3Stars.Models
 
             public override void OnEnter()
             {
-                _timer = 0f;
+                Context.PALoadTimer = 0f;
             }
         }
     }

@@ -31,9 +31,10 @@ namespace PD3Stars.Models
 
         public float HealthProgress { get => Health / MAXHEALTH; }
 
-        private float _paLoadTimer;
+        protected float PALoadTimer;
         public float PALoadingTime = 2f;
-        public float PAProgress { get => _paLoadTimer / PALoadingTime; }
+
+        public float PAProgress { get => PALoadTimer / PALoadingTime; }
 
         protected BrawlerHPFSM HPFSM;
         protected BrawlerPAFSM PAFSM;
@@ -63,7 +64,7 @@ namespace PD3Stars.Models
 
         public void CountPATimer(float fixedDeltaTime)
         {
-            _paLoadTimer += fixedDeltaTime;
+            PALoadTimer += fixedDeltaTime;
         }
 
         public void ReceiveDamage(float damage)

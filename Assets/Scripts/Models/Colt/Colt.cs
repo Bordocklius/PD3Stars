@@ -9,6 +9,8 @@ namespace PD3Stars.Models.ColtModels
         public event EventHandler<ColtFiredEventArgs> ColtFired;
 
         public int MagSize { get; set; } = 8;
+        protected int CurrentMagSize { get; set; }
+
         public float FireDelay { get; private set; } = 0.1f;
         private float _fireTimer;
 
@@ -40,6 +42,8 @@ namespace PD3Stars.Models.ColtModels
 
         protected override void PAExecuted()
         {
+            CurrentMagSize--;
+
             // Get bullet from pool, create one if none is available
             ColtBullet bullet = BulletPool.Where(x => !x.IsActive).FirstOrDefault();
             if(bullet == null)
@@ -51,6 +55,7 @@ namespace PD3Stars.Models.ColtModels
             bullet.ResetBullet();
             ColtFired.Invoke(this, new ColtFiredEventArgs(bullet));
         }
+
     }
 
     public class ColtFiredEventArgs : EventArgs
