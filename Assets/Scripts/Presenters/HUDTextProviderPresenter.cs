@@ -44,6 +44,9 @@ namespace PD3Stars.Presenters
             Model = model;
             HealthText = healthText;
             PaLoadingProgressText = pAProgressText;
+
+            UpdateHealthText();
+            UpdatePALoadingProgessText();
         }
 
         protected void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)

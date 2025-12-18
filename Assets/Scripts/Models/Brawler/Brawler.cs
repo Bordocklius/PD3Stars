@@ -49,7 +49,7 @@ namespace PD3Stars.Models
 
         public Brawler()
         {
-            Health = 1;
+            Health = 100;
         }
 
         public override void FixedUpdate(float fixedDeltaTime)
