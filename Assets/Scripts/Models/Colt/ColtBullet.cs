@@ -39,6 +39,9 @@ namespace PD3Stars.Models.ColtModels
 
         public override void FixedUpdate(float fixedDeltaTime)
         {
+            if(this.IsActive)
+                return;
+
             base.FixedUpdate(fixedDeltaTime);
             if(TTL < MaxTTL)
             {
