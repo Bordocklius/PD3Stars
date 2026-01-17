@@ -82,8 +82,8 @@ namespace PD3Stars.Presenters
             if(MovementStrategy != null)
             {
                 MovementStrategy.Update(Time.deltaTime);            
-                HandleMovement();            
-                HandleRotation();
+                //HandleMovement();            
+                //HandleRotation();
             }
             
             if(PAStrategy != null)
@@ -99,6 +99,18 @@ namespace PD3Stars.Presenters
                 Vector3 movement = new Vector3(MovementStrategy.MoveDirection.x, 0, MovementStrategy.MoveDirection.y) * _movementSpeed * Time.deltaTime;
                 Transform.position += movement;
             }
+        }
+
+        public void MoveCharacter(Vector3 direction)
+        {
+            transform.position += direction * _movementSpeed * Time.deltaTime;
+        }
+
+        public void RotateCharacter(Vector3 direction)
+        {
+            direction = direction.normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            Transform.rotation = Quaternion.RotateTowards(Transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
         }
 
         private void HandleRotation()

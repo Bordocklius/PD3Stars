@@ -26,6 +26,7 @@ namespace PD3Stars.Strategies.Movement
             _yaw += ContextPresenter.RotationSpeed * deltaTime;
             float rad = _yaw * Mathf.Deg2Rad;
             RotationDirection = new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));
+            ContextPresenter.RotateCharacter(RotationDirection);
         }
 
     }

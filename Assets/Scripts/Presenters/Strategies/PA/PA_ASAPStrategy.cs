@@ -17,7 +17,7 @@ namespace PD3Stars.Strategies.PA
         public override void Update(float deltaTime)
         {
             AttackDirection = ContextPresenter.transform.forward;
-            Context.PARequested();
+            ContextPresenter.OnPrimaryAttack();
         }
     }
 }

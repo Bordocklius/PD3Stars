@@ -61,6 +61,7 @@ namespace PD3Stars.Strategies.Movement
         public override void Update(float deltaTime)
         {
             UpdateLookDirection();
+            HandleMovement();
         }
 
         private void UpdateLookDirection()
@@ -80,6 +81,15 @@ namespace PD3Stars.Strategies.Movement
             }
             else
                 RotationDirection = _previousLookDirection;
+        }
+
+        private void HandleMovement()
+        {
+            if (MoveDirection == Vector2.zero)
+                return;
+
+            Vector3 movement = new Vector3(MoveDirection.x, 0, MoveDirection.y);
+            ContextPresenter.MoveCharacter(movement);
         }
     }
 }
