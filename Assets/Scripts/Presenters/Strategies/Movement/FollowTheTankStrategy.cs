@@ -11,7 +11,8 @@ namespace PD3Stars.Strategies.Movement
 {
     public class FollowTheTankStrategy : MovementStrategyBase, IMovementStrategy
     {
-        private Transform _transform;
+        private float _followDistance = 1.5f;
+        private float _tolerance = 0.2f;
 
         public FollowTheTankStrategy(Brawler context, BrawlerPresenter contextPresenter) : base(context, contextPresenter)
         {

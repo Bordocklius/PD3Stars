@@ -33,10 +33,7 @@ namespace PD3Stars.Presenters
             _bulletObjPool = new Dictionary<ColtBullet, GameObject>(currentModel.MagSize);
             foreach(ColtBullet bulletModel in currentModel.BulletPool)
             {
-                GameObject bulletObj = Instantiate(_coltBulletPrefab);
-                bulletObj.SetActive(false);
-                bulletObj.GetComponent<ColtBulletPresenter>().Model = bulletModel;
-                _bulletObjPool[bulletModel] = bulletObj;
+                AddBulletToPool(bulletModel);                
             }
         }
 
@@ -48,7 +45,12 @@ namespace PD3Stars.Presenters
 
         protected virtual void Model_OnColtFired(object sender, ColtFiredEventArgs e)
         {
-            GameObject bullet = _bulletObjPool[e.ColtBullet];
+            // add bullet to pool if it doesnt exist in pool
+            if (!_bulletObjPool.TryGetValue(e.ColtBullet, out GameObject bullet))
+            {
+                bullet = AddBulletToPool(e.ColtBullet);
+            }
+
             bullet.transform.position = _barrelPoint.position;
             ColtBulletPresenter bulletPresenter = bullet.GetComponent<ColtBulletPresenter>();
             bulletPresenter.Model = e.ColtBullet;
@@ -56,6 +58,15 @@ namespace PD3Stars.Presenters
             direction.y = 0;
             bulletPresenter.BulletDirection = direction;
             bullet.SetActive(true);
+        }
+
+        private GameObject AddBulletToPool(ColtBullet bulletModel)
+        {
+            GameObject bulletObj = Instantiate(_coltBulletPrefab);
+            bulletObj.SetActive(false);
+            bulletObj.GetComponent<ColtBulletPresenter>().Model = bulletModel;
+            _bulletObjPool[bulletModel] = bulletObj;
+            return bulletObj;
         }
 
     }
