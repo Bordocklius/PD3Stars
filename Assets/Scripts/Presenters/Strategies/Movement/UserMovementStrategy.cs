@@ -81,6 +81,8 @@ namespace PD3Stars.Strategies.Movement
             }
             else
                 RotationDirection = _previousLookDirection;
+
+            ContextPresenter.RotateCharacter(RotationDirection);
         }
 
         private void HandleMovement()

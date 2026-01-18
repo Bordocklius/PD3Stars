@@ -18,6 +18,7 @@ namespace PD3Animations
             _ease = ease;
         }
 
+        // use linear progress on ease
         public float Evaluate(float linearProgress)
         {
             //return MathF.Min(1, _ease(totalElapsed, 0, 1f, duration));

@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace PD3Animations
 {
+    /// <summary>
+    /// Wrap animation curve into easing strategy
+    /// </summary>
     public class AnimationCurveStrategy: IEasingStrategy
     {
         private AnimationCurve _animationCurve;
@@ -16,6 +19,7 @@ namespace PD3Animations
             _animationCurve = animationCurve;
         }
 
+        // Use linear progress on animationcurve evaluation
         public float Evaluate(float linearProgress)
         {
             //float t = MathF.Min(1, totalElapsed / duration);

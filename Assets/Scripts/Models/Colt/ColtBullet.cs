@@ -9,7 +9,7 @@ namespace PD3Stars.Models.ColtModels
 
         public float Damage { get; set; } = 10;
 
-        public float MaxTTL { get; set; } = 2f;
+        public float MaxTTL { get; set; } = 1.9f;
 
         private float _ttl;
         public float TTL
@@ -39,7 +39,7 @@ namespace PD3Stars.Models.ColtModels
 
         public override void FixedUpdate(float fixedDeltaTime)
         {
-            if(this.IsActive)
+            if(!this.IsActive)
                 return;
 
             base.FixedUpdate(fixedDeltaTime);
