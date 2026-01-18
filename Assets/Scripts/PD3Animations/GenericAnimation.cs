@@ -41,15 +41,20 @@ namespace PD3Animations
         public float Progress
         {
             get
-            {
+            {              
                 float linearProgress = Mathf.Min(1, TotalElapsed / Duration);
                 float easedProgress;
 
-                if(Ease != null)
-                    easedProgress = Ease(linearProgress, 0, 1, 1);
+                if (EasingStrategy != null)
+                    easedProgress = EasingStrategy.Evaluate(linearProgress);
+                    //return EasingStrategy.Evaluate(TotalElapsed, Duration);
                 else 
                     easedProgress = linearProgress;
-                    return easedProgress;
+
+                //if (Ease != null)
+                //    easedProgress = Ease(linearProgress, 0, 1, 1);
+
+                return easedProgress;
             }
         }
 
@@ -57,7 +62,21 @@ namespace PD3Animations
 
         public Func<float> DeltaTime { get; set; }
 
-        public Ease Ease { get; set; }
+        public IEasingStrategy EasingStrategy { get; set; }
+
+        // Set sets easing strategy for backwards compatibility
+        private Ease _ease;
+        public Ease Ease 
+        { 
+            get { return _ease; }
+            set
+            {
+                if(value == _ease) return;
+
+                _ease = value;
+                EasingStrategy = new EasingDelegateStrategy(value);
+            } 
+        }
 
         public T ProgressValue
         {
@@ -77,7 +96,7 @@ namespace PD3Animations
             Ease = ease;
         }
 
-        public GenericAnimation(T from, T to, Func<T, T, float, T> lerpT, Ease ease, Func<float> deltaTime)
+        public GenericAnimation(T from, T to, Func<T, T, float, T> lerpT, Func<float> deltaTime, Ease ease)
         {
             From = from;
             To = to;
@@ -87,6 +106,23 @@ namespace PD3Animations
             FSM = new AnimationFSM(this);
             Ease = ease;
             DeltaTime = deltaTime;
+        }
+
+        public GenericAnimation(T from, T to, Func<T, T, float, T> lerpT, Func<float> deltaTime, IEasingStrategy easingStrategy)
+        {
+            From = from;
+            To = to;
+            Duration = 2f;
+            TotalElapsed = 0f;
+            LerpT = lerpT;
+            FSM = new AnimationFSM(this);
+            DeltaTime = deltaTime;
+            EasingStrategy = easingStrategy;
+        }
+
+        public void InitFSM()
+        {
+            FSM = new AnimationFSM(this);
         }
 
         public IEnumerator StartAnimation() 

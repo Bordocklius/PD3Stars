@@ -8,7 +8,13 @@ namespace PD3Animations
 {
     public class GenericAnimationBuilder<T>
     {
-        private GenericAnimation<T> _genericAnimation = new GenericAnimation<T>();
+        private GenericAnimation<T> _genericAnimation;
+
+        public GenericAnimationBuilder()
+        {
+            _genericAnimation = new GenericAnimation<T>();
+            _genericAnimation.InitFSM();
+        }
 
         public GenericAnimation<T> Build()
         {
@@ -30,6 +36,12 @@ namespace PD3Animations
         public GenericAnimationBuilder<T> LerpT(Func<T, T, float, T> lerpT)
         {
             _genericAnimation.LerpT = lerpT;
+            return this;
+        }
+
+        public GenericAnimationBuilder<T> EasingStrategy(IEasingStrategy easingStrategy)
+        {
+            _genericAnimation.EasingStrategy = easingStrategy;
             return this;
         }
 
