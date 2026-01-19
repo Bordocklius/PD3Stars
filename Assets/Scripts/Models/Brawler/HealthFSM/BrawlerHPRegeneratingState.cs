@@ -20,7 +20,7 @@ namespace PD3Stars.Models
             {
                 if (e.PropertyName.Equals(nameof(Context.Health)))
                 {
-                    CheckBrawlerHP();
+                    //CheckBrawlerHP();
                 }
             }
 
@@ -42,11 +42,11 @@ namespace PD3Stars.Models
 
             private void CheckBrawlerHP()
             {
-                if(Context.Health <= 0)
+                if (Context.Health <= 0)
                 {
                     FSM.TransitionTo(FSM.BrawlerHPDeadState);
                 }
-                else if(Context.Health < PreviousHealth)
+                else if (Context.Health < PreviousHealth)
                 {
                     FSM.TransitionTo(FSM.BrawlerHPCooldownState);
                 }

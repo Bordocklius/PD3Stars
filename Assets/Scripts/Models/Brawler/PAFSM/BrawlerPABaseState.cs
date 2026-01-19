@@ -23,7 +23,7 @@ namespace PD3Stars.Models
 
             public virtual void FixedUpdate(float fixedDeltaTime) 
             {
-                CheckBrawlerHP();
+                //CheckBrawlerHP();
             }
 
             public virtual void OnEnter() { }
@@ -33,6 +33,13 @@ namespace PD3Stars.Models
             {
                 FSM.TransitionTo(FSM.BrawlerPALoadingState);
             }
+
+            public virtual void BrawlerDied()
+            {
+                FSM.TransitionTo(FSM.BrawlerPADeadState);
+            }
+
+            public virtual void BrawlerRevived() { }
 
             private void CheckBrawlerHP()
             {

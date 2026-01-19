@@ -15,6 +15,8 @@ namespace PD3Stars.Models
             public BrawlerHPCooldownState BrawlerHPCooldownState { get; protected set; }
             public BrawlerHPDeadState BrawlerHPDeadState { get; protected set; }
 
+            public bool IsAlive => CurrentState != BrawlerHPDeadState;
+
             // Current state returned from base as a HealthBaseState
             public new BrawlerHPBaseState CurrentState
             {

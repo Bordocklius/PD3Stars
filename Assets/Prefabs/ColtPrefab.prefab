@@ -372,6 +372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 641dd455e4a3d8144bf29ef0f80f097b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _visuals: {fileID: 5411010605258738913}
+  _canvas: {fileID: 5411010605258738913}
   _movementSpeed: 5
   <Transform>k__BackingField: {fileID: 6606970783869764773}
   <RotationSpeed>k__BackingField: 360

@@ -16,6 +16,11 @@ namespace PD3Stars.Models.ElPrimoModels
 
         public ElPrimo(): base()
         {
+            
+        }
+
+        public override void InitializeFSMs()
+        {
             HPFSM = new ElPrimoHPFSM(this);
             PAFSM = new ElPrimoPAFSM(this);
         }

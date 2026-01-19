@@ -38,6 +38,16 @@ namespace PD3Stars.Models
                 Context.Health -= damage;
             }
 
+            public virtual void BrawlerDied()
+            {
+                FSM.TransitionTo(FSM.BrawlerHPDeadState);
+            }
+
+            public virtual void BrawlerTookDamage()
+            {
+                FSM.TransitionTo(FSM.BrawlerHPCooldownState);
+            }
+
         }
     }    
 }

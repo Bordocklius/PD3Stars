@@ -23,7 +23,7 @@ namespace PD3Stars.Models
             {
                 if (e.PropertyName.Equals(nameof(Context.Health)))
                 {
-                    CheckBrawlerHP();
+                    //CheckBrawlerHP();
                 }
             }
 

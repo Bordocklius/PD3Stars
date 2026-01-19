@@ -2,6 +2,7 @@ using Codice.CM.Common;
 using PD3Stars.Models;
 using PD3Stars.Strategies.Movement;
 using PD3Stars.Strategies.PA;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -13,6 +14,13 @@ namespace PD3Stars.Presenters
 {
     public abstract class BrawlerPresenter : PresenterBaseClass<Brawler>, IDamageable
     {
+        [Header("Visuals")]
+        [SerializeField]
+        private GameObject _visuals;
+        [SerializeField]
+        private GameObject _canvas;
+
+        [Space(10)]
         [Header("Movement")]
         [SerializeField]
         private float _movementSpeed;
@@ -57,14 +65,19 @@ namespace PD3Stars.Presenters
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //if (e.PropertyName.Equals(nameof(Brawler.Health)))
-            //    ShowHealth();
+            if (e.PropertyName.Equals(nameof(Brawler.Health)))
+                Model_OnHealthChanged();
         }
 
-        //protected virtual void ModelSetInitialisation(TBrawler previousModel)
-        //{
+        protected override void ModelSetInitialisation(Brawler previousModel)
+        {
+            if(previousModel != null)
+            {
+                previousModel.BrawlerRevived -= Model_OnBrawlerRevived;
+            }
 
-        //}
+            Model.BrawlerRevived += Model_OnBrawlerRevived;
+        }
 
         public void AddHBPresenter() => _HBPresenter = new HealthBarPresenter(Model, HealthBar);
 
@@ -81,7 +94,11 @@ namespace PD3Stars.Presenters
         protected override void Update()
         {
             base.Update();
-            if(MovementStrategy != null)
+
+            //if (Model.Health <= 0) return;
+            if (!Model.IsAlive) return;
+
+            if (MovementStrategy != null)
             {
                 MovementStrategy.Update(Time.deltaTime);            
                 //HandleMovement();            
@@ -150,5 +167,28 @@ namespace PD3Stars.Presenters
         {            
             Model?.ReceiveDamage(damage);
         }
+
+        protected virtual void Model_OnHealthChanged()
+        {
+            //if (Model.Health <= 0)
+                //Model_OnBrawlerDied();
+            if (!Model.IsAlive)
+                Model_OnBrawlerDied();
+        }
+
+        protected virtual void Model_OnBrawlerDied()
+        {
+            _visuals.SetActive(false);
+            _canvas.SetActive(false);
+            CharController.enabled = false;
+        }
+
+        protected virtual void Model_OnBrawlerRevived(object sender, EventArgs e)
+        {
+            _visuals.SetActive(true);
+            _canvas.SetActive(true);
+            CharController.enabled = true;
+        }
+
     }
 }

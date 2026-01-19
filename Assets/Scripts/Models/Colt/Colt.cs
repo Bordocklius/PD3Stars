@@ -19,15 +19,18 @@ namespace PD3Stars.Models.ColtModels
         public override string PrefabName => "ColtPrefab";
 
         public Colt(): base()
-        {
-            HPFSM = new ColtHPFSM(this);
-            PAFSM = new ColtPAFSM(this);
-
+        {         
             BulletPool = new List<ColtBullet>(MagSize);
             while(BulletPool.Count < MagSize)
             {
                 BulletPool.Add(new ColtBullet());
             }
+        }
+
+        public override void InitializeFSMs()
+        {
+            HPFSM = new ColtHPFSM(this);
+            PAFSM = new ColtPAFSM(this);
         }
 
         public override void FixedUpdate(float fixedDeltaTime)

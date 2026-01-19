@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 940493876190117366}
   - component: {fileID: 8920210074292959905}
   m_Layer: 0
-  m_Name: Colt visual
+  m_Name: ElPrimo visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,6 +340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39447acdbd69197469048e97adba7c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _visuals: {fileID: 5411010605258738913}
+  _canvas: {fileID: 6070907744958731471}
   _movementSpeed: 5
   <Transform>k__BackingField: {fileID: 6606970783869764773}
   <RotationSpeed>k__BackingField: 360
@@ -624,6 +626,11 @@ PrefabInstance:
 --- !u!224 &590664842522926331 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5137619746338758579, guid: ad7b3b53ea571674a858deec539043f7, type: 3}
+  m_PrefabInstance: {fileID: 5728028399313208136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6070907744958731471 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1963069257554532231, guid: ad7b3b53ea571674a858deec539043f7, type: 3}
   m_PrefabInstance: {fileID: 5728028399313208136}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &8890755170702473890 stripped

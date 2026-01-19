@@ -13,6 +13,11 @@ namespace PD3Stars.Models
             public BrawlerPADeadState(BrawlerPAFSM fsm) : base(fsm)
             {
             }
+
+            public override void BrawlerRevived()
+            {
+                FSM.TransitionTo(FSM.BrawlerPALoadingState);
+            }
         }
     }
     
