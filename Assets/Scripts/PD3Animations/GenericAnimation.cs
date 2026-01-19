@@ -83,7 +83,10 @@ namespace PD3Animations
             get => LerpT(From, To, Progress);
         }
 
-        public GenericAnimation() { }
+        public GenericAnimation() 
+        {
+            FSM = new AnimationFSM(this);
+        }
 
         public GenericAnimation(T from, T to, Func<T, T, float, T> lerpT, Ease ease)
         {
@@ -129,8 +132,11 @@ namespace PD3Animations
         {
             if(DeltaTime == null)
             {
-                Debug.Log("No deltatime function assigned");
+                Debug.LogError("No deltatime function assigned to animation");
+                yield break;
             }
+            if(FSM == null)
+                InitFSM();
             if(FSM.CurrentState is AnimationEndedState)
                 FSM.CurrentState.ResetAnimation();
             if(FSM.CurrentState is not AnimationCreatedState)

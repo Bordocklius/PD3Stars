@@ -29,6 +29,10 @@ namespace PD3Stars.Models
             public virtual void OnEnter() { }
             public virtual void OnExit() { }
             public virtual void ExecutePA() { }
+            public virtual void PAFinished() 
+            {
+                FSM.TransitionTo(FSM.BrawlerPALoadingState);
+            }
 
             private void CheckBrawlerHP()
             {

@@ -10,7 +10,15 @@ namespace PD3Stars.Models.ElPrimoModels
     {
         public class ElPrimoPAExecutingState: BrawlerPAExecutingState
         {
+            public new ElPrimo Context => base.Context as ElPrimo;
+
             public ElPrimoPAExecutingState(ElPrimoPAFSM fsm): base(fsm) { }
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                Context.PAExecuted();
+            }
         }
     }
 }

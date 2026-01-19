@@ -25,16 +25,19 @@ namespace PD3Stars.Presenters
                 Colt previousColtModel = previousModel as Colt;
                 previousColtModel.ColtFired -= Model_OnColtFired;
             }
+
             Colt currentModel = (Model as Colt);
-
-            currentModel.ColtFired += Model_OnColtFired;
-            currentModel.MagSize = _magSize;
-
-            _bulletObjPool = new Dictionary<ColtBullet, GameObject>(currentModel.MagSize);
-            foreach(ColtBullet bulletModel in currentModel.BulletPool)
+            if(currentModel != null)
             {
-                AddBulletToPool(bulletModel);                
-            }
+                currentModel.ColtFired += Model_OnColtFired;
+                currentModel.MagSize = _magSize;
+
+                _bulletObjPool = new Dictionary<ColtBullet, GameObject>(currentModel.MagSize);
+                foreach (ColtBullet bulletModel in currentModel.BulletPool)
+                {
+                    AddBulletToPool(bulletModel);
+                }
+            }          
         }
 
         public override void OnPrimaryAttack()

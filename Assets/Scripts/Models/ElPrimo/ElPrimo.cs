@@ -10,6 +10,10 @@ namespace PD3Stars.Models.ElPrimoModels
     {
         public override string PrefabName => "ElPrimoPrefab";
 
+        public event EventHandler ElPrimoDashed;
+
+        public float DashDamage;
+
         public ElPrimo(): base()
         {
             HPFSM = new ElPrimoHPFSM(this);
@@ -23,12 +27,17 @@ namespace PD3Stars.Models.ElPrimoModels
 
         public override void PARequested()
         {
-            
+            PAFSM.CurrentState.ExecutePA();
         }
 
         protected override void PAExecuted()
         {
-            
+            ElPrimoDashed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void PAEnded()
+        {
+            PAFSM.CurrentState.PAFinished();
         }
     }
 }

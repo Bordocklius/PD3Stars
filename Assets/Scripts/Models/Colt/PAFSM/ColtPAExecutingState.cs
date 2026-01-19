@@ -16,6 +16,7 @@ namespace PD3Stars.Models.ColtModels
 
             public override void FixedUpdate(float fixedDeltaTime)
             {
+                base.FixedUpdate(fixedDeltaTime);
                 _timer += fixedDeltaTime;
                 if(_timer > Context.FireDelay)
                 {
@@ -26,7 +27,7 @@ namespace PD3Stars.Models.ColtModels
                     }
                     else
                     {
-                        FSM.TransitionTo(FSM.BrawlerPALoadingState);
+                        PAFinished();
                     }
                 }
             }

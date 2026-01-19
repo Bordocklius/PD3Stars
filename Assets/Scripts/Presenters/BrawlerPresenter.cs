@@ -68,7 +68,7 @@ namespace PD3Stars.Presenters
 
         public void AddHBPresenter() => _HBPresenter = new HealthBarPresenter(Model, HealthBar);
 
-        public void Awake()
+        protected virtual void Awake()
         {
             if (Transform == null)
                 Transform = this.transform;

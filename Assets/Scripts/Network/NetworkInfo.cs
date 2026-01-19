@@ -16,7 +16,7 @@ namespace PD3Stars.Network
         [SerializeField]
         private int _maxSpawnCounter = 1;
 
-        private void FixedUpdate()
+        private void Update()
         {
             SpawnBrawler();
         }
