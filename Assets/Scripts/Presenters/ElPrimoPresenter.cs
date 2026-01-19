@@ -12,19 +12,25 @@ using UnityEngine;
 
 namespace PD3Stars.Presenters
 {
-    public class ElPrimoPresenter: BrawlerPresenter
+    public class ElPrimoPresenter: BrawlerPresenter, IDamageSource
     {
         [Space(10)]
         [Header("DashProperties")]
+        private GenericAnimation<Vector3> _dashAnimation;
+        [SerializeField]
+        private BoxCollider _dashCollider;
         [SerializeField]
         private InitialWeaponStats _dashStats;
-        private GenericAnimation<Vector3> _dashAnimation;
         [SerializeField]
         private float _dashDistance = 10f;
         [SerializeField]
         private float _dashDuration = 0.2f; 
         [SerializeField]
         private AnimationCurve _dashCurve;
+
+        public GameObject Source => this.gameObject;
+        public float Damage => (Model as ElPrimo).DashDamage;
+
 
         protected override void ModelSetInitialisation(Brawler previousModel)
         {
@@ -55,12 +61,11 @@ namespace PD3Stars.Presenters
         protected void Start() 
         {
             (Model as ElPrimo).DashDamage = _dashStats.Damage;
-            
+            _dashCollider.enabled = false;
         }
 
         public override void OnPrimaryAttack()
         {
-            Debug.Log("ElPrimo bonk");
             base.OnPrimaryAttack();
         }
 
@@ -68,26 +73,34 @@ namespace PD3Stars.Presenters
         {
             _dashAnimation.From = Transform.position;
             _dashAnimation.To = Transform.position + PAStrategy.AttackDirection.normalized * _dashDistance;
+            _dashCollider.enabled = true;
             StartCoroutine(_dashAnimation.StartAnimation());
         }
 
         protected virtual void DashAnimation_OnValueChanged(object sender, ValueChangedEventArgs<Vector3> e)
         {
-            Transform.position = e.CurrentValue;
+            CharController.Move(e.CurrentValue.normalized);
+            //Transform.position = e.CurrentValue;
         }
 
         protected virtual void DashAnimation_OnAnimationEnded(object sender, EventArgs e)
         {
             (Model as ElPrimo).PAEnded();
+            _dashCollider.enabled = false;
         }
 
         // Triggers when dashing into a brawler
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<IDamageable>(out IDamageable damagableObj))
-            {
-                damagableObj.TakeDamage((Model as ElPrimo).DashDamage);
-            }
+            if (!other.TryGetComponent<IDamageable>(out IDamageable damageableObj))
+                return;
+
+            // Check if damageable object is self
+            if (damageableObj is IDamageSource source && source.Source == this.gameObject)
+                return;
+
+            // Deal dash damage and give self as source
+            damageableObj.TakeDamage((Model as ElPrimo).DashDamage, this);
         }
 
     }

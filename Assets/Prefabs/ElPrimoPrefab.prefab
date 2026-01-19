@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3680484020176146309}
   - component: {fileID: 8693190192517192292}
   - component: {fileID: 4863110669881747310}
-  - component: {fileID: 3898551031443613084}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -87,27 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3898551031443613084
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613057867859995440}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3795401900602005657
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +183,6 @@ GameObject:
   - component: {fileID: 6757009491029686341}
   - component: {fileID: 940493876190117366}
   - component: {fileID: 8920210074292959905}
-  - component: {fileID: 5119498002632411925}
   m_Layer: 0
   m_Name: Colt visual
   m_TagString: Untagged
@@ -284,29 +261,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5119498002632411925
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5411010605258738913}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5838767491287739395
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,8 +272,8 @@ GameObject:
   - component: {fileID: 6606970783869764773}
   - component: {fileID: 6907525338339391422}
   - component: {fileID: 5755230062384558001}
-  - component: {fileID: 187494790121097177}
   - component: {fileID: -6243693891315905581}
+  - component: {fileID: 1403688651495538113}
   m_Layer: 0
   m_Name: ElPrimoPrefab
   m_TagString: Untagged
@@ -394,6 +348,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   HealthBar: {fileID: 8890755170702473890}
+  _dashCollider: {fileID: 1403688651495538113}
   _dashStats: {fileID: 11400000, guid: 2f7ea0340ed9d7b49818b431a145e102, type: 2}
   _dashDistance: 10
   _dashDuration: 0.2
@@ -421,29 +376,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!136 &187494790121097177
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5838767491287739395}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.57
-  m_Height: 2.75
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!143 &-6243693891315905581
 CharacterController:
   m_ObjectHideFlags: 0
@@ -468,7 +400,28 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!65 &1403688651495538113
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838767491287739395}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.0868604, z: 0.4339187}
+  m_Center: {x: 0, y: 1.1790515, z: 0.7886847}
 --- !u!1 &6078239680644905643
 GameObject:
   m_ObjectHideFlags: 0

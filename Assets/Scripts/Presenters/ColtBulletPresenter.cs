@@ -5,8 +5,11 @@ using PD3Stars.ScriptableObjects;
 
 namespace PD3Stars.Presenters
 {
-    public class ColtBulletPresenter : PresenterBaseClass<ColtBullet>
+    public class ColtBulletPresenter : PresenterBaseClass<ColtBullet>, IDamageSource
     {
+        public GameObject Source => this.gameObject;
+        public float Damage => Model.Damage;
+
         [SerializeField]
         private InitialWeaponStats _initialBulletStats;
 
@@ -16,6 +19,7 @@ namespace PD3Stars.Presenters
         public Vector3 BulletDirection;
 
         private float _bulletSpeed;
+
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -67,7 +71,7 @@ namespace PD3Stars.Presenters
         {
             if(other.TryGetComponent<IDamageable>(out IDamageable damagableObj))
             {
-                damagableObj.TakeDamage(Model.Damage);
+                damagableObj.TakeDamage(Model.Damage, this);
                 Model.IsActive = false;
             }
         }

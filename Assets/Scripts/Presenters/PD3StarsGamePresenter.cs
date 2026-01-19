@@ -103,12 +103,12 @@ namespace PD3Stars.Presenters
 
                 _playerCharachter = brawlerPresenter;
             }
-            else if(_brawlerObjects.Count == 2)
-            {
-                movementStrategy = new FollowTheTankStrategy(brawler, brawlerPresenter, _playerCharachter.transform);
+            //else if(_brawlerObjects.Count == 2)
+            //{
+            //    movementStrategy = new FollowTheTankStrategy(brawler, brawlerPresenter, _playerCharachter.transform);
 
-                paStrategy = new PA_ASAPStrategy(brawler, brawlerPresenter);
-            }
+            //    paStrategy = new PA_ASAPStrategy(brawler, brawlerPresenter);
+            //}
             else
             {
                 movementStrategy = new RotateMovementStrategy(brawler, brawlerPresenter);

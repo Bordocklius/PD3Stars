@@ -18,6 +18,7 @@ namespace PD3Stars.Presenters
         private float _movementSpeed;
         [field: SerializeField]
         public Transform Transform { get; private set; }
+        public CharacterController CharController { get; private set; }
         [field: SerializeField]
         public float RotationSpeed { get; private set; }
 
@@ -37,7 +38,6 @@ namespace PD3Stars.Presenters
         [SerializeField]
         private Image HealthBar;
         private HealthBarPresenter _HBPresenter;
-
 
         //private IMovementStrategy _movementStrategy;
         //public IMovementStrategy MovementStrategy
@@ -72,6 +72,8 @@ namespace PD3Stars.Presenters
         {
             if (Transform == null)
                 Transform = this.transform;
+            if(CharController == null)
+                CharController = this.GetComponent<CharacterController>();
             if (Camera == null)
                 Camera = Camera.main;
         }
@@ -103,7 +105,9 @@ namespace PD3Stars.Presenters
 
         public void MoveCharacter(Vector3 direction)
         {
-            transform.position += direction * _movementSpeed * Time.deltaTime;
+            Vector3 movement = direction * _movementSpeed * Time.deltaTime;
+            CharController.Move(movement);
+            //transform.position += direction * _movementSpeed * Time.deltaTime;
         }
 
         public void RotateCharacter(Vector3 direction)
@@ -142,7 +146,7 @@ namespace PD3Stars.Presenters
             Model?.PARequested();
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, IDamageSource source)
         {            
             Model?.ReceiveDamage(damage);
         }

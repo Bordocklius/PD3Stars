@@ -22249,7 +22249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileSize: 1
   dimension: {x: 30, y: 30}
-  showBuildAreaGizmo: 1
+  showBuildAreaGizmo: 0
   showTileTopGizmos: 1
   showPropBottomGizmos: 1
 --- !u!4 &458556147
@@ -52227,7 +52227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnDelay: 3
-  _maxSpawnCounter: 2
+  _maxSpawnCounter: 1
 --- !u!1001 &1110272693
 PrefabInstance:
   m_ObjectHideFlags: 0
