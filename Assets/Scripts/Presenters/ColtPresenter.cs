@@ -8,6 +8,9 @@ namespace PD3Stars.Presenters
 {
     public class ColtPresenter : BrawlerPresenter
     {
+        // Explicitly cast Model as Colt to avoid exessive casting
+        public new Colt Model => (Colt)base.Model;
+
         [SerializeField]
         private GameObject _coltBulletPrefab;
         [SerializeField]
@@ -26,18 +29,14 @@ namespace PD3Stars.Presenters
                 previousColtModel.ColtFired -= Model_OnColtFired;
             }
 
-            Colt currentModel = (Model as Colt);
-            if(currentModel != null)
-            {
-                currentModel.ColtFired += Model_OnColtFired;
-                currentModel.MagSize = _magSize;
+            Model.ColtFired += Model_OnColtFired;
+            Model.MagSize = _magSize;
 
-                _bulletObjPool = new Dictionary<ColtBullet, GameObject>(currentModel.MagSize);
-                foreach (ColtBullet bulletModel in currentModel.BulletPool)
-                {
-                    AddBulletToPool(bulletModel);
-                }
-            }          
+            _bulletObjPool = new Dictionary<ColtBullet, GameObject>(Model.MagSize);
+            foreach (ColtBullet bulletModel in Model.BulletPool)
+            {
+                AddBulletToPool(bulletModel);
+            }        
         }
 
         public override void OnPrimaryAttack()

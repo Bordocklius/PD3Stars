@@ -14,6 +14,9 @@ namespace PD3Stars.Presenters
 {
     public class ElPrimoPresenter: BrawlerPresenter, IDamageSource
     {
+        // Explicitly cast model as ElPrimo to avoid repetitive casting later
+        public new ElPrimo Model => (ElPrimo)base.Model;
+
         [Space(10)]
         [Header("DashProperties")]
         private GenericAnimation<Vector3> _dashAnimation;
@@ -29,7 +32,7 @@ namespace PD3Stars.Presenters
         private AnimationCurve _dashCurve;
 
         public GameObject Source => this.gameObject;
-        public float Damage => (Model as ElPrimo).DashDamage;
+        public float Damage => Model.DashDamage;
 
 
         protected override void ModelSetInitialisation(Brawler previousModel)
@@ -40,11 +43,8 @@ namespace PD3Stars.Presenters
                 ElPrimo previousElPrimo = previousModel as ElPrimo;
                 previousElPrimo.ElPrimoDashed -= Model_OnElPrimoDashed;
             }
-            ElPrimo currentModel = Model as ElPrimo;
-            if(currentModel != null)
-            {
-                currentModel.ElPrimoDashed += Model_OnElPrimoDashed;
-            }
+
+            Model.ElPrimoDashed += Model_OnElPrimoDashed;
         }
 
         protected override void Awake()
@@ -60,7 +60,7 @@ namespace PD3Stars.Presenters
 
         protected void Start() 
         {
-            (Model as ElPrimo).DashDamage = _dashStats.Damage;
+            Model.DashDamage = _dashStats.Damage;
             _dashCollider.enabled = false;
         }
 
@@ -85,7 +85,7 @@ namespace PD3Stars.Presenters
 
         protected virtual void DashAnimation_OnAnimationEnded(object sender, EventArgs e)
         {
-            (Model as ElPrimo).PAEnded();
+            Model.PAEnded();
             _dashCollider.enabled = false;
         }
 
@@ -100,7 +100,7 @@ namespace PD3Stars.Presenters
                 return;
 
             // Deal dash damage and give self as source
-            damageableObj.TakeDamage((Model as ElPrimo).DashDamage, this);
+            damageableObj.TakeDamage(Model.DashDamage, this);
         }
 
     }
