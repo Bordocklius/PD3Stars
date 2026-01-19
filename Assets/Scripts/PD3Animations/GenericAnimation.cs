@@ -16,7 +16,30 @@ namespace PD3Animations
 
         public T From { get; set; }
         public T To { get; set; }
-        public float Duration { get; set; }
+
+        //private float _duration;
+        //public float Duration 
+        //{ get { return _duration; }
+        //  set; 
+        //}
+
+        private float _duration;
+
+        public float Duration
+        {
+            get { return _duration; }
+            set 
+            { 
+                if(value <= 0f)
+                {
+                    Debug.LogError("Animation duration <= 0, setting 1");
+                    _duration = 1f;
+                }
+                else
+                    _duration = value; 
+            }
+        }
+
 
         private float _totalElapsed;
         public float TotalElapsed
