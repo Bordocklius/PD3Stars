@@ -65,7 +65,8 @@ namespace PD3Stars.Presenters
             GameObject bulletObj = Instantiate(_coltBulletPrefab);
             bulletObj.SetActive(false);
             bulletObj.GetComponent<ColtBulletPresenter>().Model = bulletModel;
-            _bulletObjPool[bulletModel] = bulletObj;
+            _bulletObjPool.Add(bulletModel, bulletObj);
+            //_bulletObjPool[bulletModel] = bulletObj;
             return bulletObj;
         }
 
