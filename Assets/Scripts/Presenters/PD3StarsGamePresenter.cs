@@ -35,6 +35,8 @@ namespace PD3Stars.Presenters
         private List<GameObject> _prefabByName = new List<GameObject>();
         private List<GameObject> _brawlerObjects = new List<GameObject>();
 
+        private BrawlerPresenter _playerCharachter;
+
         private void Awake()
         {
             Model = Singleton<PD3StarsGame>.Instance;
@@ -85,27 +87,37 @@ namespace PD3Stars.Presenters
             //LayoutRebuilder.ForceRebuildLayoutImmediate(_hudPrefabContainer);
             //HUDTextProviderPresenter hudPresenter = new HUDTextProviderPresenter(brawler,)
 
+            IMovementStrategy movementStrategy;
+            IPAStrategy paStrategy;
+
             if(_brawlerObjects.Count == 1)
             {
 
                 Camera.main.GetComponent<CameraFollowScript>().SetTarget(brawlerPresenter.transform);
                 brawlerPresenter.Camera = Camera.main;
-                IMovementStrategy movementStrategy = new UserMovementStrategy(brawler, brawlerPresenter);
+                movementStrategy = new UserMovementStrategy(brawler, brawlerPresenter);
                 (movementStrategy as UserMovementStrategy).SetInputActions(InputReader);
-                brawlerPresenter.MovementStrategy = movementStrategy;
 
-                IPAStrategy paStrategy = new UserPAStrategy(brawler, brawlerPresenter);
+                paStrategy = new UserPAStrategy(brawler, brawlerPresenter);
                 (paStrategy as UserPAStrategy).SetInputActions(InputReader);
-                brawlerPresenter.PAStrategy = paStrategy;
+
+                _playerCharachter = brawlerPresenter;
+            }
+            else if(_brawlerObjects.Count == 2)
+            {
+                movementStrategy = new FollowTheTankStrategy(brawler, brawlerPresenter, _playerCharachter.transform);
+
+                paStrategy = new PA_ASAPStrategy(brawler, brawlerPresenter);
             }
             else
             {
-                IMovementStrategy movementStrategy = new RotateMovementStrategy(brawler, brawlerPresenter);
-                brawlerPresenter.MovementStrategy = movementStrategy;
+                movementStrategy = new RotateMovementStrategy(brawler, brawlerPresenter);
 
-                IPAStrategy paStrategy = new PA_ASAPStrategy(brawler, brawlerPresenter);
-                brawlerPresenter.PAStrategy = paStrategy;
+                paStrategy = new PA_ASAPStrategy(brawler, brawlerPresenter);
             }
+
+            brawlerPresenter.MovementStrategy = movementStrategy;
+            brawlerPresenter.PAStrategy = paStrategy;
         }
     }
 }
