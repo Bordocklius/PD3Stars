@@ -6,25 +6,45 @@ using UnityEngine;
 
 namespace PD3Animations
 {
+    /// <summary>
+    /// Class to animate a generic type between 2 values over a duration using a Lerp function & possible easing
+    /// </summary>
+    /// <typeparam name="T">Type that will be animated</typeparam>
     public partial class GenericAnimation<T>
     {
+        /// <summary>
+        /// Event raised when the animation progressed
+        /// </summary>
         public event EventHandler<ValueChangedEventArgs<T>> ValueChanged;
+
+        /// <summary>
+        /// Event raised when the animation is reset
+        /// </summary>
         public event EventHandler AnimationReset;
+
+        /// <summary>
+        /// Event raised when the animation has ended
+        /// </summary>
         public event EventHandler AnimationEnded;
 
+        /// <summary>
+        /// FSM used to keep track of animation stated
+        /// </summary>
         public AnimationFSM FSM;
 
+        /// <summary>
+        /// Value from where is animated
+        /// </summary>
         public T From { get; set; }
+        /// <summary>
+        /// Value to where is animated
+        /// </summary>
         public T To { get; set; }
 
-        //private float _duration;
-        //public float Duration 
-        //{ get { return _duration; }
-        //  set; 
-        //}
-
         private float _duration;
-
+        /// <summary>
+        /// Duration of the animation
+        /// </summary>
         public float Duration
         {
             get { return _duration; }
@@ -42,25 +62,30 @@ namespace PD3Animations
 
 
         private float _totalElapsed;
+        /// <summary>
+        /// Elapsed time of the animation
+        /// </summary>
         public float TotalElapsed
         {
             get { return _totalElapsed; }
             set
             {
                 value = Mathf.Clamp(value, 0, Duration);
-                if (TotalElapsed == value)
+                if (_totalElapsed == value)
                     return;
 
                 T previousValue = ProgressValue;
                 _totalElapsed = value;
                 ValueChanged?.Invoke(this, new ValueChangedEventArgs<T>(previousValue, ProgressValue, Progress));
 
-                if (TotalElapsed >= Duration)
+                if (_totalElapsed >= Duration)
                     AnimationEnded?.Invoke(this, EventArgs.Empty);
-
             }
         }
 
+        /// <summary>
+        /// Progress value of the animation used in Lerp function
+        /// </summary>
         public float Progress
         {
             get
@@ -81,10 +106,19 @@ namespace PD3Animations
             }
         }
 
+        /// <summary>
+        /// Assigned Lerp function delegate for type T of the animation
+        /// </summary>
         public Func<T, T, float, T> LerpT { get; set; }
 
+        /// <summary>
+        /// Assigned DeltaTime function to progress animation time
+        /// </summary>
         public Func<float> DeltaTime { get; set; }
 
+        /// <summary>
+        /// Easing strategy used for the animation
+        /// </summary>
         public IEasingStrategy EasingStrategy { get; set; }
 
         // Set sets easing strategy for backwards compatibility
@@ -101,6 +135,9 @@ namespace PD3Animations
             } 
         }
 
+        /// <summary>
+        /// Progress value for the animation
+        /// </summary>
         public T ProgressValue
         {
             get => LerpT(From, To, Progress);
@@ -134,6 +171,14 @@ namespace PD3Animations
             DeltaTime = deltaTime;
         }
 
+        /// <summary>
+        /// Constructs a new GenericAnimation between 2 given values, using the provided lerp, easing, and deltatime functions
+        /// </summary>
+        /// <param name="from">Value to animate from</param>
+        /// <param name="to">Value to animate to</param>
+        /// <param name="lerpT">Lerp function for the generic type</param>
+        /// <param name="deltaTime">Time function used to advance animation time</param>
+        /// <param name="easingStrategy">Easing strategy used for this animation</param>
         public GenericAnimation(T from, T to, Func<T, T, float, T> lerpT, Func<float> deltaTime, IEasingStrategy easingStrategy)
         {
             From = from;
