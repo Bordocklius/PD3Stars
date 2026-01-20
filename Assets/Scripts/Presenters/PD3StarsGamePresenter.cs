@@ -81,7 +81,7 @@ namespace PD3Stars.Presenters
             brawlerPresenter.AddHBPresenter();
 
             int count = _brawlerObjects.Count - 1;
-            HUDTextProviderPresenter hudPresenter = new HUDTextProviderPresenter(brawler, _hpTexts[count], _paTexts[count]);
+            //HUDTextProviderPresenter hudPresenter = new HUDTextProviderPresenter(brawler, _hpTexts[count], _paTexts[count]);
 
             //GameObject newHUD = Instantiate(_hudTextPrefab, _hudPrefabContainer);
             //LayoutRebuilder.ForceRebuildLayoutImmediate(_hudPrefabContainer);

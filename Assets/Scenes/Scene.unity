@@ -21802,6 +21802,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450050645}
   - component: {fileID: 450050646}
+  - component: {fileID: 450050647}
   m_Layer: 5
   m_Name: HUDProvidersContainer
   m_TagString: Untagged
@@ -21857,6 +21858,26 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &450050647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450050644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d64d7d206cb4941b5e7568ea6d3476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthTexts:
+  - {fileID: 646850423}
+  - {fileID: 2068690466}
+  - {fileID: 1262347404}
+  PAProgressTexts:
+  - {fileID: 2068950178}
+  - {fileID: 1131567749}
+  - {fileID: 1822065600}
 --- !u!1 &451154192
 GameObject:
   m_ObjectHideFlags: 0
@@ -52227,7 +52248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnDelay: 3
-  _maxSpawnCounter: 1
+  _maxSpawnCounter: 2
 --- !u!1001 &1110272693
 PrefabInstance:
   m_ObjectHideFlags: 0

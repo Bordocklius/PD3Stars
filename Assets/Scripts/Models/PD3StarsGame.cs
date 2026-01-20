@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using PD3Stars.Models.ColtModels;
 using PD3Stars.Models.ElPrimoModels;
+using System.Diagnostics;
 
 namespace PD3Stars.Models
 {
@@ -13,10 +14,13 @@ namespace PD3Stars.Models
 
         public void AddBrawler(Brawler brawler)
         {
-            if (Brawlers.Count == 1)
-            {
-                Singleton<HUD>.Instance.Brawler = brawler;
-            }
+            //if (Brawlers.Count == 1)
+            //{
+            //    Singleton<HUD>.Instance.Brawler = brawler;
+            //}
+
+            Singleton<HUD>.Instance.TryAddHUDProvider(brawler);
+
             OnBrawlerSpawned(brawler);
         }
 
