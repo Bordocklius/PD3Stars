@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace PD3Stars.Presenters
 {
-    public abstract class BrawlerPresenter : PresenterBaseClass<Brawler>, IDamageable
+    public abstract class BrawlerPresenter : PresenterBaseClass<Brawler>, IDamageable, IGetModel
     {
         [Header("Visuals")]
         [SerializeField]
@@ -71,15 +71,20 @@ namespace PD3Stars.Presenters
 
         protected override void ModelSetInitialisation(Brawler previousModel)
         {
+            base.ModelSetInitialisation(previousModel);
             if(previousModel != null)
             {
                 previousModel.BrawlerRevived -= Model_OnBrawlerRevived;
+                previousModel.TeleportEvent -= Model_OnTeleport;
             }
 
             Model.BrawlerRevived += Model_OnBrawlerRevived;
+            Model.TeleportEvent += Model_OnTeleport;
         }
 
         public void AddHBPresenter() => _HBPresenter = new HealthBarPresenter(Model, HealthBar);
+
+        public UnityModelBaseClass GetModel() => Model;
 
         protected virtual void Awake()
         {
@@ -190,5 +195,17 @@ namespace PD3Stars.Presenters
             CharController.enabled = true;
         }
 
+        protected virtual void Model_OnTeleport(object sender, TeleportEventArgs e)
+        {
+            // Convert system.numerics vector3 to unityengine vector 3 for position
+            Vector3 newPos = new Vector3(e.NewPosition.X, e.NewPosition.Y, e.NewPosition.Z);
+
+            CharController.enabled = false;
+            Transform.position = newPos;
+            CharController.enabled = true;
+
+            // Convert system.numerics vector3 to unityengine vector 3 for position
+            //CharController.transform.position = new Vector3(e.NewPosition.X, e.NewPosition.Y, e.NewPosition.Z);
+        }
     }
 }

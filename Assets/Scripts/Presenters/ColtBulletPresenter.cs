@@ -1,11 +1,12 @@
-using System.ComponentModel;
-using UnityEngine;
+using PD3Stars.Models;
 using PD3Stars.Models.ColtModels;
 using PD3Stars.ScriptableObjects;
+using System.ComponentModel;
+using UnityEngine;
 
 namespace PD3Stars.Presenters
 {
-    public class ColtBulletPresenter : PresenterBaseClass<ColtBullet>, IDamageSource
+    public class ColtBulletPresenter : PresenterBaseClass<ColtBullet>, IDamageSource, IGetModel
     {
         public GameObject Source => this.gameObject;
         public float Damage => Model.Damage;
@@ -20,6 +21,7 @@ namespace PD3Stars.Presenters
 
         private float _bulletSpeed;
 
+        public UnityModelBaseClass GetModel() => Model;
 
         protected override void Model_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -29,11 +31,11 @@ namespace PD3Stars.Presenters
 
         protected override void ModelSetInitialisation(ColtBullet previousModel)
         {
-            //if(previousModel != null)
-            //{
-            //    previousModel.TTLExpired -= Model_OnTTLTimerExpired;
-            //}
-            //Model.TTLExpired += Model_OnTTLTimerExpired;
+            if (previousModel != null)
+            {
+                previousModel.TeleportEvent -= Model_OnTeleport;
+            }
+            Model.TeleportEvent += Model_OnTeleport;
         }
 
         private void Start()
@@ -62,6 +64,13 @@ namespace PD3Stars.Presenters
             this.gameObject.SetActive(false);
         }
 
+        protected virtual void Model_OnTeleport(object sender, TeleportEventArgs e)
+        {
+            // Convert system.numerics vector3 to unityengine vector 3 for position
+            Vector3 newPos = new Vector3(e.NewPosition.X, _transform.position.y, e.NewPosition.Z);
+
+            _transform.position = newPos;
+        }
         //protected virtual void Model_OnTTLTimerExpired(object sender, EventArgs e)
         //{
         //    Destroy(this.gameObject);

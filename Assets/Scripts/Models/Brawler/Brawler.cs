@@ -1,10 +1,14 @@
 using System;
+using System.Numerics;
 
 namespace PD3Stars.Models
 {
-    public abstract partial class Brawler : UnityModelBaseClass, IHealthBar, IHUDProvider
+    public abstract partial class Brawler : UnityModelBaseClass, IHealthBar, IHUDProvider, ITeleportable
     {
         public event EventHandler BrawlerRevived;
+        public event EventHandler<TeleportEventArgs> TeleportEvent;
+
+        public bool IsTeleportable { get; set; } = true;
 
         public const float MAXHEALTH = 1000;
         private float _health;
@@ -58,6 +62,7 @@ namespace PD3Stars.Models
             SetHPHalf();
             InitializeFSMs();
             InitializeHPChecker();
+            IsTeleportable = true;
         }
 
         public abstract void InitializeFSMs();
@@ -114,6 +119,12 @@ namespace PD3Stars.Models
             SetHPHalf();
             PAFSM.CurrentState.BrawlerRevived();
             BrawlerRevived?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void TeleportRequested(Vector3 newPosition)
+        {
+            if(IsTeleportable)
+                TeleportEvent?.Invoke(this, new TeleportEventArgs(newPosition));
         }
     }
 
